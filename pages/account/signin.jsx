@@ -85,7 +85,7 @@ const SignIn = () => {
             <form onSubmit={formik.handleSubmit}>
               <div class="mb-6">
                 <label
-                  for="email"
+                  htmlFor="email"
                   className="block mb-1 text-sm font-medium text-neutral-800"
                 >
                   Email
@@ -102,7 +102,7 @@ const SignIn = () => {
               </div>
               <div className="mb-6">
                 <label
-                  for="password"
+                  htmlFor="password"
                   className="block mb-1 text-sm font-medium text-neutral-800"
                 >
                   Password
