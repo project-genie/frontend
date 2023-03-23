@@ -59,6 +59,9 @@ const SignIn = () => {
         }, 2000);
       } catch (error) {
         setLoading(false);
+        toast.error(error.response.data.message, {
+          position: "bottom-right",
+        });
         console.log("Error occured!: ", error);
       }
     },
@@ -83,7 +86,7 @@ const SignIn = () => {
             </div>
 
             <form onSubmit={formik.handleSubmit}>
-              <div class="mb-6">
+              <div className="mb-6">
                 <label
                   htmlFor="email"
                   className="block mb-1 text-sm font-medium text-neutral-800"
