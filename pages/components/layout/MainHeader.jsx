@@ -1,8 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const MainHeader = () => {
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "http://localhost:8080/api/users/signout",
+        {},
+        { withCredentials: true }
+      );
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data.message);
+    }
+  };
   return (
     <nav className="px-2 sm:px-4 py-4 bg-neutral-900">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
@@ -46,7 +61,10 @@ const MainHeader = () => {
               </Link>
             </li>
             <li>
-              <button className="flex justify-start items-center py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+              <button
+                onClick={() => handleLogout()}
+                className="flex justify-start items-center py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              >
                 <Image
                   className="mr-2"
                   alt="Door"
