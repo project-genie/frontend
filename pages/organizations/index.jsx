@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import MainLayout from "../components/layout/MainLayout";
 
 const Organizations = () => {
   const handleFetch = async () => {
@@ -17,12 +18,12 @@ const Organizations = () => {
   };
 
   return (
-    <div>
+    <MainLayout>
       <h1>PRIVATE ROUTE</h1>
       <div className="m-20">
         <button onClick={handleFetch}>Fetch Orgs</button>
       </div>
-    </div>
+    </MainLayout>
   );
 };
 
