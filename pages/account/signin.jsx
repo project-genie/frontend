@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from "react";
 
 import { useFormik } from "formik";
-import * as yup from "yup";
-import { NextResponse } from "next/server";
 import axios from "axios";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import Spinner from "../components/Spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const notify = () => toast("Wow so easy!");
 
   const isAuthenticated = async () => {
     try {
