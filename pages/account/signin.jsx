@@ -7,9 +7,10 @@ import Image from "next/image";
 import Spinner from "../components/Spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
 
 const SignIn = () => {
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const isAuthenticated = async () => {
@@ -81,7 +82,7 @@ const SignIn = () => {
             </div>
 
             <form onSubmit={formik.handleSubmit}>
-              <div className="mb-6">
+              <div className="mb-3">
                 <label
                   htmlFor="email"
                   className="block mb-1 text-sm font-medium text-neutral-800"
@@ -98,7 +99,7 @@ const SignIn = () => {
                   required
                 />
               </div>
-              <div className="mb-6">
+              <div className="mb-3">
                 <label
                   htmlFor="password"
                   className="block mb-1 text-sm font-medium text-neutral-800"
@@ -113,6 +114,20 @@ const SignIn = () => {
                   value={formik.values.password}
                   required
                 />
+              </div>
+
+              <div className="my-3">
+                <p className="text-sm">
+                  Do not have an account yet?{" "}
+                  <Link
+                    href="/account/signup-candidate"
+                    className="text-primary-500 underline
+                  "
+                  >
+                    Sign Up
+                  </Link>{" "}
+                  instead.
+                </p>
               </div>
 
               <button
