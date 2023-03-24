@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const protectedPages = ["/", "/organizations", "/organizations/[id]"];
+const protectedPages = ["/", "/organizations", "/organizations/:id"];
 
 export function middleware(request) {
   if (protectedPages.find((page) => page === request.nextUrl.pathname)) {
