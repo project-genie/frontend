@@ -3,11 +3,11 @@ import axios from "axios";
 import MainLayout from "../components/layout/MainLayout";
 import { useRouter } from "next/router";
 import Button from "../components/Button";
-import Modal from "react-modal";
 import CreateModal from "../components/CreateModal";
 import { useFormik } from "formik";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
+import { useTable } from "react-table";
 
 const Organizations = () => {
   const [organizations, setOrganizations] = useState([]);
@@ -77,38 +77,109 @@ const Organizations = () => {
     },
   });
 
+  const data = React.useMemo(() => organizations, [organizations]);
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Name",
+        accessor: "organization.name", // accessor is the "key" in the data
+      },
+      {
+        Header: "Role",
+        accessor: "role",
+      },
+    ],
+    []
+  );
+
+  const tableInstance = useTable({ columns, data });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    tableInstance;
   return (
     <MainLayout>
-      <div className="m-20">
-        <div className="w-full lg:w-[95%] flex flex-col items-start bg-secondary-100 rounded-lg">
-          {/* HERO */}
-          <div className="flex md:flex-row flex-col justify-between items-start p-4 w-full">
-            <h1 className="text-xl font-medium underline">Organizations</h1>
+      <div className="flex flex-col justify-center items-center">
+        <div className="flex justify-center items-center mt-10">
+          <p className="text-base">Select an organization.</p>
+        </div>
+        <div className="w-[80%] bg-secondary-100 rounded-lg mt-10">
+          <div className="flex md:flex-row flex-col justify-between items-center p-2 border-b border-secondary-700">
+            <h1 className="text-lg font-medium underline">Organizations</h1>
             <Button
               text="Create Organization"
               handle={openCreateOrganizationModal}
             />
           </div>
-          {/* SELECT COMPONENT WRAPPER*/}
-          <div className="flex justify-center">
-            {/* SELECT COMPONENT*/}
-            <ul className="flex flex-wrap">
-              {organizations?.map((organization) => (
-                <li
-                  key={organization.organization.id}
-                  className="flex justify-center items-center p-4 m-4 bg-secondary-400 rounded-lg cursor-pointer hover:bg-secondary-500 w-[10rem] h-[10rem]"
-                  onClick={() =>
-                    router.push(
-                      `/organizations/${organization.organization.id}`
-                    )
-                  }
-                >
-                  <h1 className="text-sm font-medium">
-                    {organization.organization.name}
-                  </h1>
-                </li>
-              ))}
-            </ul>
+          <div className="flex justify-center w-full">
+            <table {...getTableProps()} className="w-full">
+              <thead>
+                {
+                  // Loop over the header rows
+                  headerGroups.map((headerGroup) => (
+                    // Apply the header row props
+                    <tr
+                      key=""
+                      {...headerGroup.getHeaderGroupProps()}
+                      className=""
+                    >
+                      {
+                        // Loop over the headers in each row
+                        headerGroup.headers.map((column) => (
+                          // Apply the header cell props
+                          <th
+                            className="text-sm text-left p-2 border-b border-secondary-400"
+                            key=""
+                            {...column.getHeaderProps()}
+                          >
+                            {
+                              // Render the header
+                              column.render("Header")
+                            }
+                          </th>
+                        ))
+                      }
+                    </tr>
+                  ))
+                }
+              </thead>
+              {/* Apply the table body props */}
+              <tbody {...getTableBodyProps()}>
+                {
+                  // Loop over the table rows
+                  rows.map((row) => {
+                    // Prepare the row for display
+                    prepareRow(row);
+                    return (
+                      // Apply the row props
+                      <tr
+                        className="hover:bg-secondary-200 cursor-pointer"
+                        key=""
+                        {...row.getRowProps()}
+                      >
+                        {
+                          // Loop over the rows cells
+                          row.cells.map((cell) => {
+                            // Apply the cell props
+                            return (
+                              <td
+                                className="text-sm border-b border-secondary-400 p-2"
+                                key=""
+                                {...cell.getCellProps()}
+                              >
+                                {
+                                  // Render the cell contents
+                                  cell.render("Cell")
+                                }
+                              </td>
+                            );
+                          })
+                        }
+                      </tr>
+                    );
+                  })
+                }
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
