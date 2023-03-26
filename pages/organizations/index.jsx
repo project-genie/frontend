@@ -26,7 +26,6 @@ const Organizations = () => {
   };
 
   const handleFetch = async () => {
-    console.log("Fetch Orgs");
     await axios
       .get("http://localhost:8080/api/organizations", {
         withCredentials: true,
