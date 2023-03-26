@@ -33,7 +33,6 @@ const Organizations = () => {
       })
       .then((response) => {
         setOrganizations(response.data.data);
-        console.log("Organizations: ", response);
       })
       .catch((error) => {
         console.log("Error occured!: ", error);
@@ -96,13 +95,17 @@ const Organizations = () => {
   const tableInstance = useTable({ columns, data });
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
+
+  const handleRowClick = (row) => {
+    router.push(`/organizations/${row.original.organization.id}`);
+  };
   return (
     <MainLayout>
       <div className="flex flex-col justify-center items-center">
         <div className="flex justify-center items-center mt-10">
           <p className="text-base">Select an organization.</p>
         </div>
-        <div className="w-[80%] bg-secondary-100 rounded-lg mt-10">
+        <div className="w-[80%] bg-secondary-50 rounded-lg mt-10 border border-secondary-200">
           <div className="flex md:flex-row flex-col justify-between items-center p-2 border-b border-secondary-700">
             <h1 className="text-lg font-medium underline">Organizations</h1>
             <Button
@@ -118,7 +121,7 @@ const Organizations = () => {
                   headerGroups.map((headerGroup) => (
                     // Apply the header row props
                     <tr
-                      key=""
+                      key={headerGroup.id}
                       {...headerGroup.getHeaderGroupProps()}
                       className=""
                     >
@@ -153,7 +156,8 @@ const Organizations = () => {
                       // Apply the row props
                       <tr
                         className="hover:bg-secondary-200 cursor-pointer"
-                        key=""
+                        onClick={() => handleRowClick(row)}
+                        key={row.original.organization.id}
                         {...row.getRowProps()}
                       >
                         {
@@ -163,7 +167,7 @@ const Organizations = () => {
                             return (
                               <td
                                 className="text-sm border-b border-secondary-400 p-2"
-                                key=""
+                                key={cell.value}
                                 {...cell.getCellProps()}
                               >
                                 {
