@@ -1,14 +1,17 @@
 import Link from "next/link";
-import React, { useEffect } from "react";
-import { useRouter } from "next/router";
+import React from "react";
 import SidebarLink from "../../SidebarLink";
+import { useRouter } from "next/router";
 
-const OrganizationSidebar = () => {
+const OrganizationSidebar = ({ user }) => {
+  console.log("sidebar user: ", user);
   const router = useRouter();
-
   return (
     <div className="flex justify-center items-center lg:block col-start-1 col-end-13 lg:col-start-1 lg:col-end-3 row-start-1 row-end-2 lg:row-start-1 lg:row-end-13 h-20 lg:min-h-screen bg-neutral-800">
-      <div className="flex lg:flex-col justify-center items-center lg:h-full">
+      <div>
+        
+      </div>
+      <div className="flex lg:flex-col justify-start items-center lg:h-full mt-4">
         <SidebarLink
           href={`/organizations/${router.query?.organization}`}
           text="Summary"
@@ -26,13 +29,15 @@ const OrganizationSidebar = () => {
           text="People"
           isActive={router.pathname === `/organizations/[organization]/people`}
         />
-        <SidebarLink
-          href={`/organizations/${router.query?.organization}/settings`}
-          text="Settings"
-          isActive={
-            router.pathname === `/organizations/[organization]/settings`
-          }
-        />
+        {user.role === "owner" && (
+          <SidebarLink
+            href={`/organizations/${router.query?.organization}/settings`}
+            text="Settings"
+            isActive={
+              router.pathname === `/organizations/[organization]/settings`
+            }
+          />
+        )}
       </div>
     </div>
   );
