@@ -70,7 +70,6 @@ const Organizations = () => {
         toast.error(error.response.data.message, {
           position: "bottom-right",
         });
-        console.log("Error occured!: ", error);
       }
     },
   });
@@ -219,7 +218,7 @@ const Organizations = () => {
                 htmlFor="description"
                 className="block mb-1 text-sm font-medium text-neutral-800"
               >
-                Description
+                Description*
               </label>
               <input
                 type="text"
