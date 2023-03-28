@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import MainLayout from "../components/layout/MainLayout";
 import OrganizationList from "../components/OrganizationList";
 

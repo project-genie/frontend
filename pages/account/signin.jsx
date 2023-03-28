@@ -5,8 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Spinner from "../components/Spinner";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import Link from "next/link";
 
 const SignIn = () => {
@@ -65,8 +64,6 @@ const SignIn = () => {
 
   return (
     <div className="grid grid-cols-6 grid-rows-6 min-h-screen">
-      <ToastContainer />
-
       <div className="grid lg:col-start-1 lg:col-end-3 lg:row-start-1 lg:row-end-7 row-start-1 row-end-4 col-start-1 col-end-7 py-5 bg-secondary-100">
         <div className="row-start-1 row-end-3 flex justify-center items-center">
           <Image
