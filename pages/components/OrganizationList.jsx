@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import OrganizationCard from "./OrganizationCard";
 import OrganizationListHeader from "./OrganizationListHeader";
+import axios from "axios";
 
-const OrganizationList = ({ organizations }) => {
+const OrganizationList = () => {
+  const [organizations, setOrganizations] = useState([]);
+
+  const handleFetch = async () => {
+    await axios
+      .get("http://localhost:8080/api/organizations", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setOrganizations(response.data.data);
+      })
+      .catch((error) => {
+        console.log("Error occured!: ", error);
+      });
+  };
+
+  useEffect(() => {
+    handleFetch();
+  }, []);
   return (
     <div>
       <OrganizationListHeader />

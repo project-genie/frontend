@@ -58,13 +58,13 @@ const ProjectListHeader = ({ user }) => {
   });
 
   return (
-    <div className="flex justify-between items-center p-2 m-2 border-b border-secondary-700">
+    <div className="flex justify-between items-center">
       <h1>Projects</h1>
       {user?.role === "owner" && (
         <Button
           text="Create Project"
           handle={() => {
-            setIsCreateProjectModalOpen(true);
+            openCreateProjectModal();
           }}
         />
       )}
