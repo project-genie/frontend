@@ -64,11 +64,6 @@ const OrganizationListHeader = () => {
             <h2 className="font-medium text-lg">Create organization.</h2>
           </div>
 
-          {message && (
-            <div className="mb-3">
-              <p className="text-sm text-neutral-800">{message}</p>
-            </div>
-          )}
           <form onSubmit={formik.handleSubmit}>
             <div className="mb-3">
               <label
@@ -83,7 +78,7 @@ const OrganizationListHeader = () => {
                 className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block w-full p-2.5 "
                 placeholder="Squad"
                 onChange={formik.handleChange}
-                value={formik.values.email}
+                value={formik.values.name}
                 required
               />
             </div>
@@ -99,7 +94,7 @@ const OrganizationListHeader = () => {
                 id="description"
                 className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block w-full p-2.5 "
                 onChange={formik.handleChange}
-                value={formik.values.password}
+                value={formik.values.description}
               />
             </div>
 
