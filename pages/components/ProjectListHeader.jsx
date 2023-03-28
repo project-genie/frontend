@@ -28,8 +28,6 @@ const ProjectListHeader = ({ user }) => {
       organizationId: "",
     },
     onSubmit: async (values) => {
-      console.log("values: ", router.query);
-      console.log(values);
       formik.values.organizationId = router.query.organization;
       try {
         setLoading(true);
@@ -42,17 +40,14 @@ const ProjectListHeader = ({ user }) => {
         );
         setLoading(false);
         closeCreateProjectModal();
-        toast.success("Project is created successfully.", {
-          position: "bottom-right",
-        });
+        toast.success("Project created successfully.");
         setTimeout(() => {
           window.location.reload();
         }, 2000);
       } catch (error) {
         setLoading(false);
-        toast.error(error.response.data.message, {
-          position: "bottom-right",
-        });
+
+        toast.error(error.response.data.message);
       }
     },
   });
@@ -77,7 +72,6 @@ const ProjectListHeader = ({ user }) => {
           <div className="mb-6">
             <h2 className="font-medium text-lg">Create project.</h2>
           </div>
-
           <form onSubmit={formik.handleSubmit}>
             <div className="mb-3">
               <label
@@ -92,7 +86,7 @@ const ProjectListHeader = ({ user }) => {
                 className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block w-full p-2.5 "
                 placeholder="Squad"
                 onChange={formik.handleChange}
-                value={formik.values.email}
+                value={formik.values.name}
                 required
               />
             </div>
@@ -108,7 +102,7 @@ const ProjectListHeader = ({ user }) => {
                 id="description"
                 className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block w-full p-2.5 "
                 onChange={formik.handleChange}
-                value={formik.values.password}
+                value={formik.values.description}
               />
             </div>
 

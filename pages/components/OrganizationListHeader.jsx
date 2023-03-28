@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import Button from "./Button";
 import { useFormik } from "formik";
 import axios from "axios";
-import { toast } from "react-toastify";
 import CreateModal from "./CreateModal";
 import Spinner from "./Spinner";
+import { toast } from "react-toastify";
 
 const OrganizationListHeader = () => {
   const [isCreateOrganizationModalOpen, setIsCreateOrganizationModalOpen] =
@@ -36,17 +36,13 @@ const OrganizationListHeader = () => {
         );
         setLoading(false);
         closeCreateOrganizationModal();
-        toast.success("Organization is created successfully.", {
-          position: "bottom-right",
-        });
+        toast.success("Organization created successfully.");
         setTimeout(() => {
           window.location.reload();
         }, 2000);
       } catch (error) {
         setLoading(false);
-        toast.error(error.response.data.message, {
-          position: "bottom-right",
-        });
+        toast.error(error.response.data.message);
       }
     },
   });
@@ -68,6 +64,11 @@ const OrganizationListHeader = () => {
             <h2 className="font-medium text-lg">Create organization.</h2>
           </div>
 
+          {message && (
+            <div className="mb-3">
+              <p className="text-sm text-neutral-800">{message}</p>
+            </div>
+          )}
           <form onSubmit={formik.handleSubmit}>
             <div className="mb-3">
               <label
