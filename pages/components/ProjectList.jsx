@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProjectCard from "@/pages/components/ProjectCard";
 import axios from "axios";
+import ProjectListHeader from "./ProjectListHeader";
 
 const ProjectList = ({ user }) => {
   const [projects, setProjects] = useState([]);
@@ -28,17 +29,21 @@ const ProjectList = ({ user }) => {
     getProjects();
   }, [user]);
   return (
-    <div className="p-2 m-2 flex flex-wrap">
-      {projects.map((project) => (
-        <ProjectCard
-          key={project.id}
-          id={project.id}
-          name={project.name}
-          description={project.description}
-          role={user.role}
-          userId={user.id}
-        />
-      ))}
+    <div>
+      <ProjectListHeader user={user} />
+      <div className="">
+        {projects.map((project) => (
+          <ProjectCard
+            key={project.id}
+            id={project.id}
+            name={project.name}
+            description={project.description}
+            role={user.role}
+            userId={user.id}
+            organizationId={project.organizationId}
+          />
+        ))}
+      </div>
     </div>
   );
 };

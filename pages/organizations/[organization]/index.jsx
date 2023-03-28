@@ -31,8 +31,14 @@ const Organization = () => {
   }, [router.isReady]);
   return (
     <OrganizationLayout>
-      <ProjectListHeader user={user} />
-      <ProjectList user={user} />
+      <div className="flex flex-col justify-center items-center">
+        <div className="flex justify-center items-center mt-10">
+          <p className="text-base">Select a project.</p>
+        </div>
+        <div className="w-[80%] bg-secondary-50 rounded-lg mt-10">
+          <ProjectList user={user} />
+        </div>
+      </div>
     </OrganizationLayout>
   );
 };
