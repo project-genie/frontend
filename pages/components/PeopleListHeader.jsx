@@ -7,9 +7,16 @@ import Spinner from "./Spinner";
 import CreateModal from "./CreateModal";
 import { toast } from "react-toastify";
 import TextInput from "./TextInput";
+import { Formik, Field, Form } from "formik";
 
-const PeopleListHeader = ({ user }) => {
+const PeopleListHeader = ({ user, type }) => {
   const [isInviteUserModalOpen, setIsInviteUserModalOpen] = useState(false);
+  const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
+
+  const [organizationPeople, setOrganizationPeople] = useState([]);
+  const [projectPeople, setProjectPeople] = useState([]);
+  const [nonMembersOfProject, setNonMembersOfProject] = useState([]);
+
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -21,6 +28,37 @@ const PeopleListHeader = ({ user }) => {
     setIsInviteUserModalOpen(false);
   };
 
+  const openAddUserModal = () => {
+    setIsAddUserModalOpen(true);
+  };
+
+  const closeAddUserModal = () => {
+    setIsAddUserModalOpen(false);
+  };
+
+  const getPotentialMembers = async () => {
+    await axios
+      .get(
+        `http://localhost:8080/api/projects/${router.query?.project}/nonmembers`,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        console.log("mmmee: ", response.data.data);
+        setNonMembersOfProject(response.data.data);
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
+  };
+
+  useEffect(() => {
+    if (router.isReady) {
+      getPotentialMembers();
+    }
+  }, [router.isReady]);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -28,7 +66,7 @@ const PeopleListHeader = ({ user }) => {
     onSubmit: async (values) => {
       try {
         setLoading(true);
-        const response = await axios.post(
+        await axios.post(
           `http://localhost:8080/api/organizations/invite/${router.query?.organization}`,
           values,
           {
@@ -50,17 +88,28 @@ const PeopleListHeader = ({ user }) => {
   return (
     <div className="flex justify-between items-center">
       <h1>People</h1>
-      {user?.role === "owner" && (
+      {user?.role === "owner" && type === "organization" ? (
         <Button
           text="Invite People"
           handle={() => {
             openInviteUserModal();
           }}
         />
+      ) : (
+        user?.role === "owner" &&
+        type === "project" && (
+          <Button
+            text="Add People"
+            handle={() => {
+              openAddUserModal();
+            }}
+          />
+        )
       )}
+      {/* invite user modal */}
       <CreateModal
         isOpen={isInviteUserModalOpen}
-        closeModal={() => setIsInviteUserModalOpen(false)}
+        closeModal={closeInviteUserModal}
         contentLabel="Invite People"
       >
         <div className="w-full">
@@ -85,6 +134,69 @@ const PeopleListHeader = ({ user }) => {
               {loading ? <Spinner /> : <p>Invite</p>}
             </button>
           </form>
+        </div>
+      </CreateModal>
+      {/* add user modal */}
+      <CreateModal
+        isOpen={isAddUserModalOpen}
+        closeModal={closeAddUserModal}
+        contentLabel="Add People"
+      >
+        <div className="w-full">
+          <div className="mb-6">
+            <h2 className="font-medium text-lg">Add People</h2>
+          </div>
+          <div>
+            <Formik
+              initialValues={{
+                checked: [],
+              }}
+              onSubmit={async (values) => {
+                values.checked.forEach(async (value) => {
+                  await axios
+                    .post(
+                      `http://localhost:8080/api/projects/${router.query?.project}/members`,
+                      {
+                        userId: parseInt(value),
+                        role: "member",
+                      },
+                      {
+                        withCredentials: true,
+                      }
+                    )
+                    .then((response) => {
+                      console.log(response);
+                    })
+                    .catch((error) => {
+                      toast.error(error);
+                    });
+                });
+                toast.success("Members added successfully.");
+                setTimeout(() => {
+                  window.location.reload();
+                }, 2000);
+              }}
+            >
+              {() => (
+                <Form>
+                  <div role="group" aria-labelledby="checkbox-group">
+                    {nonMembersOfProject.map((person) => (
+                      <label key={person.user.id}>
+                        <Field
+                          type="checkbox"
+                          name="checked"
+                          value={person.user.id.toString()}
+                        />
+                        {person.user.name}
+                      </label>
+                    ))}
+                  </div>
+
+                  <button type="submit">Submit</button>
+                </Form>
+              )}
+            </Formik>
+          </div>
         </div>
       </CreateModal>
     </div>

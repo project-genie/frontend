@@ -4,13 +4,33 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import Image from "next/image";
 
-const PeopleCard = ({ user, person }) => {
+const PeopleCard = ({ user, person, type }) => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const router = useRouter();
   const handleRemovePersonFromOrganization = async () => {
     try {
       await axios.delete(
         `http://localhost:8080/api/organizations/${router.query?.organization}/members/${person.user.id}`,
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success("Person removed successfully.");
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
+  const handleRemovePersonFromProject = async () => {
+    try {
+      await axios.post(
+        `http://localhost:8080/api/projects/${router.query?.project}/members/remove`,
+        {
+          userId: person.user.id,
+        },
         {
           withCredentials: true,
         }
@@ -44,13 +64,24 @@ const PeopleCard = ({ user, person }) => {
         };
       }
 
-      await axios.put(
-        `http://localhost:8080/api/organizations/${router.query?.organization}/members`,
-        body,
-        {
-          withCredentials: true,
-        }
-      );
+      if (type === "project") {
+        await axios.put(
+          `http://localhost:8080/api/projects/${router.query?.project}/members`,
+          body,
+          {
+            withCredentials: true,
+          }
+        );
+      } else if (type === "organization") {
+        await axios.put(
+          `http://localhost:8080/api/organizations/${router.query?.organization}/members`,
+          body,
+          {
+            withCredentials: true,
+          }
+        );
+      }
+
       toast.success("Person updated successfully.");
       setTimeout(() => {
         window.location.reload();
@@ -96,7 +127,11 @@ const PeopleCard = ({ user, person }) => {
                 {person.role === "member" ? "Make owner" : "Make member"}
               </li>
               <li
-                onClick={handleRemovePersonFromOrganization}
+                onClick={
+                  type === "organization"
+                    ? handleRemovePersonFromOrganization
+                    : handleRemovePersonFromProject
+                }
                 className="p-2 text-sm text-neutral-50 bg-error-300 hover:bg-error-400 w-full flex justify-center rounded-bl-lg rounded-br-lg hover:cursor-pointer"
               >
                 Remove

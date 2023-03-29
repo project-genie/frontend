@@ -69,23 +69,23 @@ const TaskStatusButton = ({ status, assigneeId, user, taskId }) => {
     }
   };
 
-  const handleRemoveTask = async () => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:8080/api/tasks/${taskId}`,
-        {
-          withCredentials: true,
-        }
-      );
-      toast.success(response.data.message);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response?.data.message);
-    }
-  };
+  // const handleRemoveTask = async () => {
+  //   try {
+  //     const response = await axios.delete(
+  //       `http://localhost:8080/api/tasks/${taskId}`,
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     );
+  //     toast.success(response.data.message);
+  //     setTimeout(() => {
+  //       window.location.reload();
+  //     }, 1000);
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error(error.response?.data.message);
+  //   }
+  // };
   return (
     <div
       className={`${color} py-2 px-4 text-sm lowercase rounded-lg flex justify-center items-center hover:cursor-pointer hover:border hover:border-secondary-200 relative`}
@@ -131,14 +131,6 @@ const TaskStatusButton = ({ status, assigneeId, user, taskId }) => {
               className="text-neutral-50 p-2 text-sm bg-success-200 hover:bg-success-100 w-full flex justify-center hover:cursor-pointer"
             >
               done
-            </li>
-            <li
-              onClick={() => {
-                handleRemoveTask();
-              }}
-              className="p-2 text-sm text-neutral-50 bg-error-300 hover:bg-error-400 w-full flex justify-center rounded-bl-lg rounded-br-lg hover:cursor-pointer"
-            >
-              Remove
             </li>
           </ul>
         </div>

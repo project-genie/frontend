@@ -36,7 +36,7 @@ const OrganizationPeople = () => {
     <OrganizationLayout>
       <div className="flex flex-col justify-center items-center">
         <div className="w-[80%] bg-secondary-50 rounded-lg mt-10">
-          <PeopleList user={user} />
+          <PeopleList user={user} type="organization" />
         </div>
         <div className="w-[80%] bg-secondary-50 rounded-lg mt-10">
           <PeopleInviteList user={user} />
