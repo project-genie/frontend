@@ -87,7 +87,7 @@ const PeopleCard = ({ user, person }) => {
           </button>
         )}
         {isOptionsOpen && (
-          <div className="bg-secondary-300 rounded-lg w-40 absolute top-8 right-0">
+          <div className="bg-secondary-300 rounded-lg w-40 absolute top-8 right-0 z-50">
             <ul className="flex flex-col justify-start items-center h-full w-full">
               <li
                 onClick={handleUpdateMember}

@@ -20,20 +20,21 @@ const CreateModal = ({ isOpen, closeModal, contentLabel, children }) => {
           bottom: "auto",
           marginRight: "-50%",
           transform: "translate(-50%, -50%)",
-          width: "80%",
-          height: "80%",
+          width: "100%",
+          height: "100%",
           backgroundColor: "#ECE7E3",
+          border: "1px solid #DBD5CF",
         },
       }}
       contentLabel={contentLabel}
     >
-      <div className="flex flex-row-reverse">
+      <div className="flex flex-row-reverse py-10">
         <button onClick={closeModal} className="">
           <Image src="/icons/close.svg" alt="Cross" width={24} height={24} />
         </button>
       </div>
-      <div className="flex justify-center items-center h-[90%]">
-        <div className="w-[50%] h-full p-4 flex items-center justify-center">
+      <div className="flex justify-center items-center h-full mb-10">
+        <div className="w-[50%] p-4 flex items-center justify-center py-10">
           {children}
         </div>
       </div>
