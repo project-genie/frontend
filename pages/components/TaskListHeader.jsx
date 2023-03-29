@@ -10,7 +10,8 @@ import TextInput from "./TextInput";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const TaskListHeader = ({ user }) => {
+const TaskListHeader = () => {
+  const [user, setUser] = useState({});
   const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] = useState(false);
   const [people, setPeople] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -20,6 +21,28 @@ const TaskListHeader = ({ user }) => {
     return today;
   });
   const router = useRouter();
+
+  const getUser = async () => {
+    await axios
+      .get(
+        `http://localhost:8080/api/projects/currentuserproject/${router.query?.project}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        setUser(response.data.data);
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
+  };
+
+  useEffect(() => {
+    if (router.isReady) {
+      getUser();
+    }
+  }, [router.isReady]);
 
   const openCreateTaskModal = () => {
     setIsCreateTaskModalOpen(true);
@@ -38,7 +61,6 @@ const TaskListHeader = ({ user }) => {
         }
       );
       setPeople(response.data.data);
-      console.log(response.data.data);
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -52,7 +74,7 @@ const TaskListHeader = ({ user }) => {
 
   const formik = useFormik({
     initialValues: {
-      createdBy: user.id,
+      createdBy: "",
       projectId: "",
       assigneeId: "",
       name: "",
@@ -62,6 +84,7 @@ const TaskListHeader = ({ user }) => {
       difficulty: 3,
     },
     onSubmit: async (values) => {
+      console.log("values user: ", user);
       formik.values.projectId = router.query?.project;
       formik.values.dueDate = new Date(dateValue);
       console.log("user: ", user);

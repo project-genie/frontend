@@ -31,7 +31,7 @@ const TaskList = ({ user }) => {
 
   return (
     <div>
-      <TaskListHeader user={user} />
+      <TaskListHeader />
       <div className="">
         {tasks.map((task) => (
           <TaskCard
@@ -43,6 +43,10 @@ const TaskList = ({ user }) => {
             status={task.status}
             assigneeId={task.assigneeId}
             createdBy={task.createdBy}
+            createdAt={task.createdAt}
+            exception={task.exception}
+            difficulty={task.difficulty}
+            updatedAt={task.updatedAt}
             projectId={task.projectId}
             role={user.role}
             userId={user.id}
