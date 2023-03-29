@@ -6,7 +6,6 @@ import Image from "next/image";
 
 const PeopleCard = ({ user, person }) => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
-  console.log(person);
   const router = useRouter();
   const handleRemovePersonFromOrganization = async () => {
     try {
@@ -30,6 +29,7 @@ const PeopleCard = ({ user, person }) => {
   };
 
   const handleUpdateMember = async () => {
+    setIsOptionsOpen(false);
     try {
       let body = {};
       if (person.role === "owner") {
@@ -54,8 +54,9 @@ const PeopleCard = ({ user, person }) => {
       toast.success("Person updated successfully.");
       setTimeout(() => {
         window.location.reload();
-      }, 3000);
+      }, 2000);
     } catch (error) {
+      setIsOptionsOpen(false);
       toast.error(error.response.data.message);
     }
   };

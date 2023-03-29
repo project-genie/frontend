@@ -2,7 +2,7 @@ import React from "react";
 import SidebarLink from "../../SidebarLink";
 import { useRouter } from "next/router";
 
-const OrganizationSidebar = ({ user }) => {
+const ProjectSidebar = ({ user }) => {
   const router = useRouter();
   return (
     <div className="flex justify-center items-center lg:sticky lg:top-0 lg:h-screen lg:block col-start-1 col-span-full lg:col-start-1 lg:col-end-3 row-start-1 row-end-2 lg:row-start-1 lg:row-span-full h-20 bg-neutral-800">
@@ -39,4 +39,4 @@ const OrganizationSidebar = ({ user }) => {
   );
 };
 
-export default OrganizationSidebar;
+export default ProjectSidebar;
