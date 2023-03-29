@@ -7,6 +7,7 @@ import Image from "next/image";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TextInput from "../components/TextInput";
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
@@ -105,77 +106,46 @@ const SignUp = () => {
             </div>
             {isReady && (
               <form onSubmit={formik.handleSubmit}>
-                <div className="mb-3  ">
-                  <label
-                    htmlFor="email"
-                    className="block mb-1 text-sm font-medium text-neutral-800"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="bg-neutral-100 border border-neutral-800 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block w-full p-2.5"
-                    placeholder="example@provider.com"
-                    onChange={formik.handleChange}
-                    value={query.email}
-                    disabled
-                    required
-                  />
-                </div>
+                <TextInput
+                  id="email"
+                  type="email"
+                  label="Email"
+                  placeholder="Enter an email address"
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                  required={true}
+                />
 
-                <div className="mb-3  ">
-                  <label
-                    htmlFor="name"
-                    className="block mb-1 text-sm font-medium text-neutral-800"
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="name"
-                    id="name"
-                    className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block w-full p-2.5"
-                    placeholder="John Doe"
-                    onChange={formik.handleChange}
-                    value={formik.values.name}
-                    required
-                  />
-                </div>
+                <TextInput
+                  id="name"
+                  type="text"
+                  label="Name"
+                  placeholder="Enter name"
+                  onChange={formik.handleChange}
+                  value={formik.values.name}
+                  required={true}
+                />
 
-                <div className="mb-3  ">
-                  <label
-                    htmlFor="password"
-                    className="block mb-1 text-sm font-medium text-neutral-800"
-                  >
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    id="password"
-                    className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block w-full p-2.5 "
-                    onChange={formik.handleChange}
-                    value={formik.values.password}
-                    required
-                  />
-                </div>
+                <TextInput
+                  id="password"
+                  type="password"
+                  label="Password"
+                  placeholder="Enter your password"
+                  onChange={formik.handleChange}
+                  value={formik.values.password}
+                  required={true}
+                />
 
-                <div className="mb-3  ">
-                  <label
-                    htmlFor="confirmPassword"
-                    className="block mb-1 text-sm font-medium text-neutral-800"
-                  >
-                    Confirm Password
-                  </label>
-                  <input
-                    type="password"
-                    id="confirmPassword"
-                    className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block w-full p-2.5 "
-                    onChange={formik.handleChange}
-                    value={formik.values.confirmPassword}
-                    required
-                  />
-                </div>
-
+                <TextInput
+                  id="confirmpassword"
+                  type="password"
+                  label="Confirm Password"
+                  placeholder="Enter your password again"
+                  onChange={formik.handleChange}
+                  value={formik.values.confirmPassword}
+                  required={true}
+                />
+             
                 <button
                   type="submit"
                   className="text-neutral-50 bg-primary-500 hover:bg-primary-600 focus:ring-4 focus:outline-none focus:ring-primary-500 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"

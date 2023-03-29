@@ -1,48 +1,56 @@
 import React, { useState } from "react";
-import Button from "./Button";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 import axios from "axios";
+import Button from "./Button";
 import CreateModal from "./CreateModal";
 import Spinner from "./Spinner";
-import { toast } from "react-toastify";
 import TextInput from "./TextInput";
 
-const OrganizationListHeader = () => {
-  const [isCreateOrganizationModalOpen, setIsCreateOrganizationModalOpen] =
-    useState(false);
+const TaskListHeader = ({ user }) => {
+  const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const openCreateOrganizationModal = () => {
-    setIsCreateOrganizationModalOpen(true);
+  const openCreateTaskModal = () => {
+    setIsCreateTaskModalOpen(true);
   };
 
-  const closeCreateOrganizationModal = () => {
-    setIsCreateOrganizationModalOpen(false);
+  const closeCreateTaskModal = () => {
+    setIsCreateTaskModalOpen(false);
   };
 
   const formik = useFormik({
     initialValues: {
+      createdBy: user.id,
+      projectId: null,
+      assigneeId: null,
       name: "",
       description: "",
+      status: "",
+      priority: "",
+      dueDate: "",
+      difficulty: "",
     },
     onSubmit: async (values) => {
+      formik.values.projectId = router.query?.project;
+      console.log(values);
+
       try {
         setLoading(true);
-        const response = await axios.post(
-          "http://localhost:8080/api/organizations",
-          values,
-          {
-            withCredentials: true,
-          }
-        );
+        await axios.post("http://localhost:8080/api/tasks", values, {
+          withCredentials: true,
+        });
         setLoading(false);
-        closeCreateOrganizationModal();
-        toast.success("Organization created successfully.");
+        closeCreateTaskModal();
+        toast.success("Task created successfully.");
         setTimeout(() => {
           window.location.reload();
         }, 2000);
       } catch (error) {
         setLoading(false);
+
         toast.error(error.response.data.message);
       }
     },
@@ -50,40 +58,38 @@ const OrganizationListHeader = () => {
 
   return (
     <div className="flex justify-between items-center">
-      <h1>Organizations</h1>
+      <h1>Tasks</h1>
       <Button
-        handle={() => openCreateOrganizationModal()}
-        text="Create Organization"
+        text="Create Task"
+        handle={() => {
+          openCreateTaskModal();
+        }}
       />
       <CreateModal
-        isOpen={isCreateOrganizationModalOpen}
-        closeModal={() => setIsCreateOrganizationModalOpen(false)}
-        contentLabel="Create Organization"
+        isOpen={isCreateTaskModalOpen}
+        closeModal={() => setIsCreateTaskModalOpen(false)}
+        contentLabel="Create Task"
       >
         <div className="w-full">
           <div className="mb-6">
-            <h2 className="font-medium text-lg">Create organization.</h2>
+            <h2 className="font-medium text-lg">Create task.</h2>
           </div>
-
           <form onSubmit={formik.handleSubmit}>
             <TextInput
               id="name"
-              type="text"
               label="Name"
-              placeholder="Enter name"
               onChange={formik.handleChange}
               value={formik.values.name}
               required={true}
+              placeholder={"Enter task name"}
             />
-
             <TextInput
               id="description"
-              type="text"
               label="Description"
-              placeholder="Enter a description"
               onChange={formik.handleChange}
               value={formik.values.description}
               required={true}
+              placeholder={"Enter task description"}
             />
 
             <button
@@ -99,4 +105,4 @@ const OrganizationListHeader = () => {
   );
 };
 
-export default OrganizationListHeader;
+export default TaskListHeader;
