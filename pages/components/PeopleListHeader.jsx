@@ -6,6 +6,7 @@ import Button from "./Button";
 import Spinner from "./Spinner";
 import CreateModal from "./CreateModal";
 import { toast } from "react-toastify";
+import TextInput from "./TextInput";
 
 const PeopleListHeader = ({ user }) => {
   const [isInviteUserModalOpen, setIsInviteUserModalOpen] = useState(false);
@@ -67,23 +68,15 @@ const PeopleListHeader = ({ user }) => {
             <h2 className="font-medium text-lg">Invite People</h2>
           </div>
           <form onSubmit={formik.handleSubmit}>
-            <div className="mb-3">
-              <label
-                htmlFor="email"
-                className="block mb-1 text-sm font-medium text-neutral-800"
-              >
-                Email*
-              </label>
-              <input
-                type="email"
-                id="email"
-                className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block w-full p-2.5 "
-                placeholder="example@provider.com"
-                onChange={formik.handleChange}
-                value={formik.values.email}
-                required
-              />
-            </div>
+            <TextInput
+              id="email"
+              type="email"
+              label="Email"
+              placeholder="Enter an email address"
+              onChange={formik.handleChange}
+              value={formik.values.email}
+              required={true}
+            />
 
             <button
               type="submit"

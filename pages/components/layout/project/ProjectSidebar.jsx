@@ -9,28 +9,36 @@ const ProjectSidebar = ({ user }) => {
       <div></div>
       <div className="flex lg:flex-col lg:justify-start justify-center items-center lg:mt-4">
         <SidebarLink
-          href={`/organizations/${router.query?.organization}`}
+          href={`/organizations/${router.query?.organization}/projects/${router.query?.project}`}
           text="Summary"
-          isActive={router.pathname === `/organizations/[organization]`}
-        />
-        <SidebarLink
-          href={`/organizations/${router.query?.organization}/projects`}
-          text="Projects"
           isActive={
-            router.pathname === `/organizations/[organization]/projects`
+            router.pathname ===
+            `/organizations/[organization]/projects/[project]`
           }
         />
         <SidebarLink
-          href={`/organizations/${router.query?.organization}/people`}
+          href={`/organizations/${router.query?.organization}/projects/${router.query?.project}/tasks`}
+          text="Tasks"
+          isActive={
+            router.pathname ===
+            `/organizations/[organization]/projects/[project]/tasks`
+          }
+        />
+        <SidebarLink
+          href={`/organizations/${router.query?.organization}/projects/${router.query?.project}/people`}
           text="People"
-          isActive={router.pathname === `/organizations/[organization]/people`}
+          isActive={
+            router.pathname ===
+            `/organizations/[organization]/projects/[project]/people`
+          }
         />
         {user.role === "owner" && (
           <SidebarLink
-            href={`/organizations/${router.query?.organization}/settings`}
+            href={`/organizations/${router.query?.organization}/projects/${router.query?.project}/settings`}
             text="Settings"
             isActive={
-              router.pathname === `/organizations/[organization]/settings`
+              router.pathname ===
+              `/organizations/[organization]/projects/[project]/settings`
             }
           />
         )}

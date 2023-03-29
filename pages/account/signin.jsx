@@ -7,6 +7,7 @@ import Image from "next/image";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import TextInput from "../components/TextInput";
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
@@ -80,39 +81,24 @@ const SignIn = () => {
             </div>
 
             <form onSubmit={formik.handleSubmit}>
-              <div className="mb-3">
-                <label
-                  htmlFor="email"
-                  className="block mb-1 text-sm font-medium text-neutral-800"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block w-full p-2.5 "
-                  placeholder="example@provider.com"
-                  onChange={formik.handleChange}
-                  value={formik.values.email}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label
-                  htmlFor="password"
-                  className="block mb-1 text-sm font-medium text-neutral-800"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block w-full p-2.5 "
-                  onChange={formik.handleChange}
-                  value={formik.values.password}
-                  required
-                />
-              </div>
+              <TextInput
+                id="email"
+                label="Email"
+                type="email"
+                placeholder="Enter an email address"
+                onChange={formik.handleChange}
+                value={formik.values.email}
+                required={true}
+              />
+              <TextInput
+                id="password"
+                label="Password"
+                type="password"
+                placeholder="Enter your password"
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                required={true}
+              />
 
               <div className="my-3">
                 <p className="text-sm">

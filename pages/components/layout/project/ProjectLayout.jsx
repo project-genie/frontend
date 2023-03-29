@@ -18,7 +18,6 @@ const ProjectLayout = ({ children }) => {
         }
       )
       .then((response) => {
-        console.log(user);
         setUser(response.data.data);
       })
       .catch((error) => {

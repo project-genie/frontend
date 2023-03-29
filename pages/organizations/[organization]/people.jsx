@@ -6,7 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import PeopleInviteList from "@/pages/components/PeopleInviteList";
 
-const People = () => {
+const OrganizationPeople = () => {
   const [user, setUser] = useState({});
   const router = useRouter();
 
@@ -46,4 +46,4 @@ const People = () => {
   );
 };
 
-export default People;
+export default OrganizationPeople;
