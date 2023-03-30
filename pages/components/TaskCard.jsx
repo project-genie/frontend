@@ -71,12 +71,12 @@ const TaskCard = ({
           <div className="flex md:flex-col flex-col justify-between items-center p-4 rounded-lg my-2">
             <div className="mb-10">
               <h2 className="text-primary-500 text-lg">{name}</h2>
-              <p className="text-sm font-medium text-neutral-700">
-                {description}
-              </p>
             </div>
-            <div className="flex justify-around items-start w-full">
-              <div>
+            <div>
+              
+            </div>
+            <div className="flex justify-start items-start w-full">
+              <div className="">
                 <TaskExtendedChunk
                   description="Assignee"
                   text={assignee?.name}
