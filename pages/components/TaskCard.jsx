@@ -45,7 +45,7 @@ const TaskCard = ({
           withCredentials: true,
         }
       );
-      setAssignee(response.data.user);
+      setAssignee(response.data.data);
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data.message);
