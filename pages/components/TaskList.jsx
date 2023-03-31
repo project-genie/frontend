@@ -42,6 +42,7 @@ const TaskList = ({ user }) => {
             priority={task.priority}
             status={task.status}
             assigneeId={task.assigneeId}
+            dueDate={task.dueDate}
             createdBy={task.createdBy}
             createdAt={task.createdAt}
             exception={task.exception}

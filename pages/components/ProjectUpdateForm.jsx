@@ -6,20 +6,18 @@ import { useRouter } from "next/router";
 import Spinner from "./Spinner";
 import TextInput from "./TextInput";
 
-const OrganizationUpdateForm = () => {
+const ProjectUpdateForm = () => {
   const [loading, setLoading] = useState(false);
-  const [organization, setOrganization] = useState({});
+  const [project, setProject] = useState({});
   const router = useRouter();
-  const getOrganization = async () => {
+  const getProject = async () => {
     await axios
-      .get(
-        `http://localhost:8080/api/organizations/${router.query?.organization}`,
-        {
-          withCredentials: true,
-        }
-      )
+      .get(`http://localhost:8080/api/projects/${router.query?.project}`, {
+        withCredentials: true,
+      })
       .then((res) => {
-        setOrganization(res.data.data);
+        console.log(res.data.data);
+        setProject(res.data.data);
       })
       .catch((err) => {
         console.log(err.response);
@@ -28,7 +26,7 @@ const OrganizationUpdateForm = () => {
 
   useEffect(() => {
     if (router.isReady) {
-      getOrganization();
+      getProject();
     }
   }, [router.isReady]);
 
@@ -36,22 +34,22 @@ const OrganizationUpdateForm = () => {
     enableReinitialize: true,
     initialValues: [
       {
-        name: organization.name ? organization.name : "",
-        description: organization.description ? organization.description : "",
+        name: project.name ? project.name : "",
+        description: project.description ? project.description : "",
       },
     ],
     onSubmit: async (values) => {
       try {
         setLoading(true);
         await axios.put(
-          `http://localhost:8080/api/organizations/${router.query?.organization}`,
+          `http://localhost:8080/api/projects/${router.query?.project}`,
           values,
           {
             withCredentials: true,
           }
         );
         setLoading(false);
-        toast.success("Organization updated successfully.");
+        toast.success("Project updated successfully.");
         setTimeout(() => {
           window.location.reload();
         }, 2000);
@@ -64,10 +62,10 @@ const OrganizationUpdateForm = () => {
 
   useEffect(() => {
     formik.setValues({
-      name: organization.name,
-      description: organization.description,
+      name: project.name,
+      description: project.description,
     });
-  }, [organization]);
+  }, [project]);
 
   return (
     <div>
@@ -103,4 +101,4 @@ const OrganizationUpdateForm = () => {
   );
 };
 
-export default OrganizationUpdateForm;
+export default ProjectUpdateForm;
