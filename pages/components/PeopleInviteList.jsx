@@ -16,7 +16,6 @@ const PeopleInviteList = ({ user }) => {
         withCredentials: true,
       })
       .then((response) => {
-        console.log("invites: ", response.data.data);
         setInvites(response.data.data);
       })
 

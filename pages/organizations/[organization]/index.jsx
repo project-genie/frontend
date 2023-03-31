@@ -27,7 +27,9 @@ const Organization = () => {
   };
 
   useEffect(() => {
-    getUser();
+    if (router.isReady) {
+      getUser();
+    }
   }, [router.isReady]);
   return (
     <OrganizationLayout>
