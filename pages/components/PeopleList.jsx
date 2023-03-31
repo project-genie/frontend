@@ -38,7 +38,7 @@ const PeopleList = ({ user, type }) => {
       <div className="">
         <PeopleListHeader user={user} type={type} />
         {people.map((person) => (
-          <PeopleCard key={person.id} user={user} person={person} />
+          <PeopleCard key={person.id} user={user} person={person} type={type} />
         ))}
       </div>
     </div>

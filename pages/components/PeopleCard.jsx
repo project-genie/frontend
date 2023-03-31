@@ -26,6 +26,7 @@ const PeopleCard = ({ user, person, type }) => {
 
   const handleRemovePersonFromProject = async () => {
     try {
+      console.log(router.query);
       await axios.post(
         `http://localhost:8080/api/projects/${router.query?.project}/members/remove`,
         {
