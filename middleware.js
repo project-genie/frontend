@@ -1,7 +1,13 @@
 import { NextResponse } from "next/server";
 
 export const config = {
-  matcher: ["/", "/organizations", "/organizations/:id*"],
+  matcher: [
+    "/",
+    "/organizations",
+    "/organizations/:id*",
+    "/account",
+    "/notifications",
+  ],
 };
 
 export function middleware(request) {
