@@ -69,6 +69,26 @@ const OrganizationUpdateForm = () => {
     });
   }, [organization]);
 
+  const handleDeleteOrganization = async () => {
+    try {
+      setLoading(true);
+      await axios.delete(
+        `http://localhost:8080/api/organizations/${router.query?.organization}`,
+        {
+          withCredentials: true,
+        }
+      );
+      setLoading(false);
+      toast.success("Organization deleted successfully.");
+      setTimeout(() => {
+        router.push("/organizations");
+      }, 2000);
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.response.data.message);
+    }
+  };
+
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
@@ -91,13 +111,22 @@ const OrganizationUpdateForm = () => {
           value={formik.values.description}
           required={true}
         />
+        <div className="flex justify-between items-center">
+          <button
+            type="submit"
+            className="text-neutral-50 bg-primary-500 hover:bg-primary-600 focus:ring-4 focus:outline-none focus:ring-primary-500 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+          >
+            {loading ? <Spinner /> : <p>Update</p>}
+          </button>
 
-        <button
-          type="submit"
-          className="text-neutral-50 bg-primary-500 hover:bg-primary-600 focus:ring-4 focus:outline-none focus:ring-primary-500 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-        >
-          {loading ? <Spinner /> : <p>Update</p>}
-        </button>
+          <button
+            type="button"
+            className="text-neutral-50 bg-error-300 hover:bg-error-400 focus:ring-4 focus:outline-none focus:ring-error-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            onClick={handleDeleteOrganization}
+          >
+            {loading ? <Spinner /> : <p>Delete Organization</p>}
+          </button>
+        </div>
       </form>
     </div>
   );
