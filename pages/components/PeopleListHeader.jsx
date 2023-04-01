@@ -12,9 +12,6 @@ import { Formik, Field, Form } from "formik";
 const PeopleListHeader = ({ user, type }) => {
   const [isInviteUserModalOpen, setIsInviteUserModalOpen] = useState(false);
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
-
-  const [organizationPeople, setOrganizationPeople] = useState([]);
-  const [projectPeople, setProjectPeople] = useState([]);
   const [nonMembersOfProject, setNonMembersOfProject] = useState([]);
 
   const [loading, setLoading] = useState(false);
@@ -45,7 +42,6 @@ const PeopleListHeader = ({ user, type }) => {
         }
       )
       .then((response) => {
-        console.log("mmmee: ", response.data.data);
         setNonMembersOfProject(response.data.data);
       })
       .catch((error) => {
@@ -143,10 +139,10 @@ const PeopleListHeader = ({ user, type }) => {
         contentLabel="Add People"
       >
         <div className="w-full">
-          <div className="mb-6">
+          <div className="mb-20 flex justify-center">
             <h2 className="font-medium text-lg">Add People</h2>
           </div>
-          <div>
+          <div className="flex justify-center items-center">
             <Formik
               initialValues={{
                 checked: [],
@@ -179,20 +175,29 @@ const PeopleListHeader = ({ user, type }) => {
             >
               {() => (
                 <Form>
-                  <div role="group" aria-labelledby="checkbox-group">
+                  <div
+                    className="flex justify-center items-center mb-6"
+                    role="group"
+                    aria-labelledby="checkbox-group"
+                  >
                     {nonMembersOfProject.map((person) => (
-                      <label key={person.user.id}>
+                      <label
+                        className="scale-125 flex justify-center items-center"
+                        key={person.user.id}
+                      >
                         <Field
                           type="checkbox"
                           name="checked"
                           value={person.user.id.toString()}
+                          className="mr-2"
                         />
+
                         {person.user.name}
                       </label>
                     ))}
                   </div>
 
-                  <button type="submit">Submit</button>
+                  <Button text={loading ? <Spinner /> : "Add"} />
                 </Form>
               )}
             </Formik>

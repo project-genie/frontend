@@ -12,7 +12,7 @@ const OrganizationCard = ({ organization }) => {
   const getUser = async () => {
     await axios
       .get(
-        `http://localhost:8080/api/organizations/currentuserorganization/${organization?.organization?.id}`,
+        `http://localhost:8080/api/organizations/currentuserorganization/${organization?.id}`,
         {
           withCredentials: true,
         }
@@ -32,7 +32,7 @@ const OrganizationCard = ({ organization }) => {
   const handleLeaveOrganization = () => {
     axios
       .post(
-        `http://localhost:8080/api/organizations/${organization?.organization?.id}/leave`,
+        `http://localhost:8080/api/organizations/${organization?.id}/leave`,
         {},
         {
           withCredentials: true,
@@ -54,13 +54,13 @@ const OrganizationCard = ({ organization }) => {
         <h2
           className="text-primary-500 underline mr-1 hover:cursor-pointer"
           onClick={() => {
-            router.push(`/organizations/${organization?.organization?.id}`);
+            router.push(`/organizations/${organization?.id}`);
           }}
         >
-          {organization?.organization?.name}
+          {organization?.name}
         </h2>
         <p className="text-sm font-medium text-secondary-700">
-          {organization?.role}
+          {organization?.organization_members[0].role}
         </p>
       </div>
       <div>
@@ -68,9 +68,7 @@ const OrganizationCard = ({ organization }) => {
           <ButtonSecondary
             text="Settings"
             handle={() => {
-              router.push(
-                `/organizations/${organization?.organization?.id}/settings`
-              );
+              router.push(`/organizations/${organization?.id}/settings`);
             }}
           />
         )}

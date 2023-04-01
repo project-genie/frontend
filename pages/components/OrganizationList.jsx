@@ -6,7 +6,7 @@ import axios from "axios";
 const OrganizationList = () => {
   const [organizations, setOrganizations] = useState([]);
 
-  const handleFetch = async () => {
+  const getOrganizations = async () => {
     await axios
       .get("http://localhost:8080/api/organizations", {
         withCredentials: true,
@@ -20,7 +20,7 @@ const OrganizationList = () => {
   };
 
   useEffect(() => {
-    handleFetch();
+    getOrganizations();
   }, []);
   return (
     <div>

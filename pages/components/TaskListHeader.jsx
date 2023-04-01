@@ -60,6 +60,7 @@ const TaskListHeader = () => {
           withCredentials: true,
         }
       );
+      console.log(response.data.data);
       setPeople(response.data.data);
     } catch (error) {
       toast.error(error.response.data.message);
@@ -74,9 +75,9 @@ const TaskListHeader = () => {
 
   const formik = useFormik({
     initialValues: {
-      createdBy: "",
-      projectId: "",
-      assigneeId: "",
+      createdBy: 0,
+      projectId: 0,
+      assigneeId: 0,
       name: "",
       description: "",
       priority: "",
@@ -85,11 +86,10 @@ const TaskListHeader = () => {
     },
     onSubmit: async (values) => {
       console.log("values user: ", user);
-      formik.values.projectId = router.query?.project;
+      formik.values.projectId = parseInt(router.query?.project);
       formik.values.dueDate = new Date(dateValue);
-      console.log("user: ", user);
       formik.values.createdBy = user.id;
-      console.log(values);
+      formik.values.assigneeId = parseInt(values.assigneeId);
 
       try {
         setLoading(true);
@@ -168,11 +168,11 @@ const TaskListHeader = () => {
                   as="select"
                   className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block p-2.5 w-full"
                 >
-                  <option key="default" value="" disabled>
+                  <option key="default" value={0} disabled>
                     Select an assignee
                   </option>
                   {people.map((person) => (
-                    <option key={person.id} value={person.id}>
+                    <option key={person.user.id} value={person.user.id}>
                       {person.user.name}
                     </option>
                   ))}
