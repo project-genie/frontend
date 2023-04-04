@@ -8,6 +8,7 @@ const TextInput = ({
   value,
   required,
   placeholder,
+  disabled,
 }) => {
   return (
     <div className="mb-3">
@@ -21,11 +22,12 @@ const TextInput = ({
       <input
         type={type}
         id={id}
-        className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block p-2.5 w-full"
+        className="bg-transparent border border-neutral-800 disabled:bg-neutral-100 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block p-2.5 w-full"
         placeholder={placeholder}
         onChange={onChange}
         value={value}
         required={required}
+        disabled={disabled || false}
       />
     </div>
   );
