@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 
 export const config = {
   matcher: [
-    "/",
     "/organizations",
     "/organizations/:id*",
     "/account",

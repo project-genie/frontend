@@ -68,12 +68,14 @@ const SignIn = () => {
     <div className="grid grid-cols-6 grid-rows-6 min-h-screen">
       <div className="grid lg:col-start-1 lg:col-end-3 lg:row-start-1 lg:row-end-7 row-start-1 row-end-4 col-start-1 col-end-7 py-5 bg-secondary-100">
         <div className="row-start-1 row-end-3 flex justify-center items-center">
-          <Image
-            src="/logo/logo_dark.svg"
-            width={200}
-            height={200}
-            alt="Project Genie Logo"
-          />
+          <Link href="/">
+            <Image
+              src="/logo/logo_dark.svg"
+              width={200}
+              height={200}
+              alt="Project Genie Logo"
+            />
+          </Link>
         </div>
         <div className="row-start-3 row-end-6 flex justify-center">
           <div className="w-[80%] block">
