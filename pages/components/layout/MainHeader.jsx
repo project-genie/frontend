@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import HeaderIcon from "../HeaderIcon";
@@ -8,6 +8,7 @@ import useWindowSize from "@/pages/hooks/useWindowSize";
 import HamburgerMenu from "../HamburgerMenu";
 
 const MainHeader = () => {
+  const [notificationsExist, setNotificationsExist] = useState(false);
   const size = useWindowSize();
 
   const handleLogout = async () => {
@@ -23,6 +24,27 @@ const MainHeader = () => {
       toast.error(error?.response?.data.message);
     }
   };
+
+  const getInvites = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/users/invites",
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.data.data.length > 0) {
+        setNotificationsExist(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getInvites();
+  }, []);
+
   return (
     <nav className="px-2 sm:px-4 py-4 bg-neutral-900">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
@@ -52,7 +74,10 @@ const MainHeader = () => {
                   src={"/icons/account.svg"}
                 />
               </li>
-              <li>
+              <li className="relative">
+                {notificationsExist && (
+                  <div className="w-2 h-2 bg-primary-400 absolute top-0 right-1 rounded-full"></div>
+                )}
                 <HeaderIcon
                   alt={"Bell"}
                   href={"/notifications"}

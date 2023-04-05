@@ -12,25 +12,6 @@ import TextInput from "../components/TextInput";
 
 const SignUpCandidate = () => {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
-
-  const isAuthenticated = async () => {
-    try {
-      await axios.get(process.env.BACKEND_URL + "/api/organizations", {
-        withCredentials: true,
-      });
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
-  // useEffect(() => {
-  //   if (isAuthenticated()) {
-  //     router.push("/organizations");
-  //   } else {
-  //     router.push("/account/signup-candidate");
-  //   }
-  // }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -67,12 +48,14 @@ const SignUpCandidate = () => {
     <div className="grid grid-cols-6 grid-rows-6 min-h-screen">
       <div className="grid lg:col-start-5 lg:col-end-7 lg:row-start-1 lg:row-end-7 row-start-1 row-end-4 col-start-1 col-end-7 py-5 bg-secondary-100">
         <div className="row-start-1 row-end-3 flex justify-center items-center">
-          <Image
-            src="/logo/logo_dark.svg"
-            width={200}
-            height={200}
-            alt="Project Genie Logo"
-          />
+          <Link href="/account/signin">
+            <Image
+              src="/logo/logo_dark.svg"
+              width={200}
+              height={200}
+              alt="Project Genie Logo"
+            />
+          </Link>
         </div>
         <div className="row-start-3 row-end-6 flex justify-center">
           <div className="w-[80%] block">

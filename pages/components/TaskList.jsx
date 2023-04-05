@@ -44,10 +44,9 @@ const TaskList = ({ user }) => {
             assigneeId={task.assigneeId}
             dueDate={task.dueDate}
             createdBy={task.createdBy}
-            createdAt={task.createdAt}
+            createdAt={task.created_date}
             exception={task.exception}
             difficulty={task.difficulty}
-            updatedAt={task.updatedAt}
             projectId={task.projectId}
             role={user.role}
             userId={user.id}

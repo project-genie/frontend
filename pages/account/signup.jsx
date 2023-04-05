@@ -14,25 +14,6 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  // const isAuthenticated = async () => {
-  //   try {
-  //     await axios.get(process.env.BACKEND_URL + "/api/organizations", {
-  //       withCredentials: true,
-  //     });
-  //     return true;
-  //   } catch (error) {
-  //     return false;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (isAuthenticated()) {
-  //     router.push("/organizations");
-  //   } else {
-  //     router.push("/account/signup-candidate");
-  //   }
-  // }, []);
-
   const formik = useFormik({
     initialValues: {
       email: "",

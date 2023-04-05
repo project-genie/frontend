@@ -20,7 +20,6 @@ const TaskCard = ({
   status,
   assigneeId,
   createdAt,
-  updatedAt,
   exception,
   difficulty,
   projectId,
@@ -147,6 +146,7 @@ const TaskCard = ({
         `http://localhost:8080/api/tasks/${id}`,
         {
           status,
+          assigneeId,
         },
         {
           withCredentials: true,
@@ -156,9 +156,29 @@ const TaskCard = ({
       toast.success("Task updated successfully.");
       setTimeout(() => {
         window.location.reload();
-      }, 2000);
+      }, 1000);
     } catch (error) {
       setLoading(false);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  const handleCompleteTask = async () => {
+    try {
+      setLoading(true);
+      await axios.post(
+        `http://localhost:8080/api/tasks/${id}/complete`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      setLoading(false);
+      toast.success("Task completed successfully.");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (error) {
       toast.error(error.response.data.message);
     }
   };
@@ -208,6 +228,11 @@ const TaskCard = ({
                 text="Backlog"
                 handle={handleUpdateTask("backlog")}
               />
+              <ButtonTertiary
+                icon="stop"
+                text="Complete"
+                handle={handleCompleteTask}
+              />
             </div>
             <div className="flex justify-start items-start w-full">
               <div className="mr-10">
@@ -216,7 +241,6 @@ const TaskCard = ({
                   text={assignee?.name}
                 />
                 <TaskExtendedChunk description="Created At" text={createdAt} />
-                <TaskExtendedChunk description="Updated At" text={updatedAt} />
                 <TaskExtendedChunk description="Priority" text={priority} />
               </div>
               <div>
