@@ -7,7 +7,6 @@ import Button from "./Button";
 import CreateModal from "./CreateModal";
 import Spinner from "./Spinner";
 import TextInput from "./TextInput";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const TaskListHeader = () => {
@@ -15,11 +14,11 @@ const TaskListHeader = () => {
   const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] = useState(false);
   const [people, setPeople] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [dateValue, setDateValue] = useState(() => {
-    let today = new Date();
-    today.setDate(today.getDate() + 1);
-    return today;
-  });
+  // const [dateValue, setDateValue] = useState(() => {
+  //   let today = new Date();
+  //   today.setDate(today.getDate() + 1);
+  //   return today;
+  // });
   const router = useRouter();
 
   const getUser = async () => {
@@ -81,13 +80,13 @@ const TaskListHeader = () => {
       name: "",
       description: "",
       priority: "",
-      dueDate: "",
-      difficulty: 3,
+      // dueDate: "",
+      difficulty: 5,
     },
     onSubmit: async (values) => {
       console.log("values user: ", user);
       formik.values.projectId = parseInt(router.query?.project);
-      formik.values.dueDate = new Date(dateValue);
+      // formik.values.dueDate = new Date(dateValue);
       formik.values.createdBy = user.id;
       formik.values.assigneeId = parseInt(values.assigneeId);
 
@@ -110,14 +109,14 @@ const TaskListHeader = () => {
     },
   });
 
-  const handleDateChange = (newValue) => {
-    const today = new Date();
-    if (newValue < today) {
-      toast.error("Due date cannot be in the past.");
-      return;
-    }
-    setDateValue(newValue);
-  };
+  // const handleDateChange = (newValue) => {
+  //   const today = new Date();
+  //   if (newValue < today) {
+  //     toast.error("Due date cannot be in the past.");
+  //     return;
+  //   }
+  //   setDateValue(newValue);
+  // };
 
   return (
     <div className="flex justify-between items-center">
@@ -236,10 +235,25 @@ const TaskListHeader = () => {
                   <option key={5} value={5}>
                     5
                   </option>
+                  <option key={6} value={6}>
+                    6
+                  </option>
+                  <option key={7} value={7}>
+                    7
+                  </option>
+                  <option key={8} value={8}>
+                    8
+                  </option>
+                  <option key={9} value={9}>
+                    9
+                  </option>
+                  <option key={10} value={10}>
+                    10
+                  </option>
                 </Field>
               </div>
 
-              <div className="mb-3">
+              {/* <div className="mb-3">
                 <label
                   htmlFor="duedate"
                   className="block mb-1 text-sm font-medium text-neutral-800"
@@ -253,7 +267,7 @@ const TaskListHeader = () => {
                   dateFormat="MM/dd/yyyy h:mm aa"
                   showTimeInput
                 />
-              </div>
+              </div> */}
               <button
                 type="submit"
                 className="text-neutral-50 bg-primary-500 hover:bg-primary-600 focus:ring-4 focus:outline-none focus:ring-primary-500 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
