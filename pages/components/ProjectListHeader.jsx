@@ -54,7 +54,7 @@ const ProjectListHeader = ({ user }) => {
   });
 
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center border-b border-b-secondary-400">
       <h1>Projects</h1>
       {user?.role === "owner" && (
         <Button

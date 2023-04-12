@@ -4,7 +4,7 @@ import React from "react";
 const ButtonTertiary = ({ icon, text, handle }) => {
   return (
     <button
-      className="flex justify-center items-center px-2 py-1 border border-secondary-200 hover:bg-secondary-100 rounded-md mr-1"
+      className="flex justify-center items-center px-2 py-1 border border-secondary-400 hover:bg-secondary-200 rounded-md mr-1"
       onClick={handle}
     >
       <Image

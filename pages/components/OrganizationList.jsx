@@ -25,7 +25,7 @@ const OrganizationList = () => {
   return (
     <div>
       <OrganizationListHeader />
-      <div>
+      <div className="flex-col">
         {organizations.map((organization) => (
           <OrganizationCard key={organization.id} organization={organization} />
         ))}

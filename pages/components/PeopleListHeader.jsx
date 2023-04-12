@@ -82,7 +82,7 @@ const PeopleListHeader = ({ user, type }) => {
     },
   });
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center border-b border-b-secondary-400">
       <h1>People</h1>
       {user?.role === "owner" && type === "organization" ? (
         <Button
@@ -108,7 +108,7 @@ const PeopleListHeader = ({ user, type }) => {
         closeModal={closeInviteUserModal}
         contentLabel="Invite People"
       >
-        <div className="w-full">
+        <div className="w-full ">
           <div className="mb-6">
             <h2 className="font-medium text-lg">Invite People</h2>
           </div>
