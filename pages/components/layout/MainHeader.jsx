@@ -33,7 +33,7 @@ const MainHeader = () => {
           withCredentials: true,
         }
       );
-      if (response.data.data.length > 0) {
+      if (response.data.data?.length > 0) {
         setNotificationsExist(true);
       }
     } catch (error) {
