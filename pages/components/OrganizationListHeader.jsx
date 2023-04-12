@@ -6,6 +6,7 @@ import CreateModal from "./CreateModal";
 import Spinner from "./Spinner";
 import { toast } from "react-toastify";
 import TextInput from "./TextInput";
+import Image from "next/image";
 
 const OrganizationListHeader = () => {
   const [isCreateOrganizationModalOpen, setIsCreateOrganizationModalOpen] =
@@ -49,8 +50,17 @@ const OrganizationListHeader = () => {
   });
 
   return (
-    <div className="flex justify-between items-center">
-      <h1>Organizations</h1>
+    <div className="flex justify-between items-center border-b border-b-secondary-400">
+      <div className="flex justify-center items-center">
+        <Image
+          className="mr-1"
+          src="/icons/corporation.svg"
+          alt="Corporation building"
+          width={24}
+          height={24}
+        />
+        <h1>Organizations</h1>
+      </div>
       <Button
         handle={() => openCreateOrganizationModal()}
         text="Create Organization"

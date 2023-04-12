@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import ButtonSecondary from "./ButtonSecondary";
-import ButtonError from "./ButtonError";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 const OrganizationCard = ({ organization }) => {
   const [user, setUser] = useState({});
@@ -29,51 +28,44 @@ const OrganizationCard = ({ organization }) => {
     getUser();
   }, []);
 
-  const handleLeaveOrganization = () => {
-    axios
-      .post(
-        `http://localhost:8080/api/organizations/${organization?.id}/leave`,
-        {},
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        toast.success("You have left the organization.");
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-      });
-  };
   return (
-    <div className="flex md:flex-row flex-col justify-between items-center p-4 border border-secondary-300 rounded-lg my-2">
-      <div className="flex items-center justify-start">
-        <h2
-          className="text-primary-500 underline mr-1 hover:cursor-pointer"
+    <div className="p-4 rounded-md bg-secondary-100 my-2">
+      <div className="flex items-center justify-between">
+        <div
           onClick={() => {
             router.push(`/organizations/${organization?.id}`);
           }}
+          className="flex justify-center items-center"
         >
-          {organization?.name}
-        </h2>
-        <p className="text-sm font-medium text-secondary-700">
-          {organization?.organization_members[0].role}
-        </p>
-      </div>
-      <div>
-        {user.role === "owner" && (
-          <ButtonSecondary
-            text="Settings"
-            handle={() => {
-              router.push(`/organizations/${organization?.id}/settings`);
-            }}
+          <Image
+            className="mr-1"
+            src="/icons/corporation.svg"
+            alt="Corporation building"
+            width={24}
+            height={24}
           />
-        )}
-
-        <ButtonError text="Leave" handle={handleLeaveOrganization} />
+          <h2 className="text-neutral-800 underline mr-1 hover:cursor-pointer">
+            {organization?.name}
+          </h2>
+        </div>
+        <div className="hover:cursor-pointer flex justify-center items-center">
+          <div>
+            <p className="text-xs font-medium text-secondary-700 mr-2">
+              {organization?.organization_members[0].role}
+            </p>
+          </div>
+          {user.role === "owner" && (
+            <Image
+              src="/icons/dots-black.svg"
+              width={24}
+              height={24}
+              alt="dots"
+              onClick={() => {
+                router.push(`/organizations/${organization?.id}/settings`);
+              }}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

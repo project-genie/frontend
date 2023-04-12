@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import ButtonSecondary from "./ButtonSecondary";
+import Image from "next/image";
+import TaskExtendedChunk from "./TaskExtendedChunk";
 
 const ProjectCard = ({
   id,
@@ -90,62 +92,51 @@ const ProjectCard = ({
   }, []);
 
   return (
-    <div className="flex md:flex-row flex-col justify-between items-center p-4 border border-secondary-300 rounded-lg my-2">
-      <div className="flex items-center justify-start">
-        <h2
-          className="text-primary-500 underline mr-1 hover:cursor-pointer"
+    <div className="p-4 rounded-md bg-secondary-100 my-2">
+      <div className="flex items-center justify-between">
+        <div
+          className="flex items-center justify-center"
           onClick={() => {
             router.push(`/organizations/${organizationId}/projects/${id}`);
           }}
         >
-          {name}
-        </h2>
-        <p className="text-sm font-medium text-secondary-700">{user.role}</p>
-      </div>
-
-      <div>
-        <div className="flex items-center justify-between">
-          <div className="flex justify-start items-end mr-2">
-            <p className="text-lg font-medium text-secondary-700">{tasks}</p>
-            <span className="text-xs font-medium text-secondary-700">
-              open tasks
-            </span>
-          </div>
-          <div className="flex justify-start items-end mr-2">
-            <p className="text-lg font-medium text-secondary-700">
-              {assignedTasks}
+          <Image
+            className="mr-1"
+            src="/icons/folder.svg"
+            alt="Folder"
+            width={24}
+            height={24}
+          />
+          <h2 className="text-neutral-800 underline mr-1 hover:cursor-pointer">
+            {name}
+          </h2>
+        </div>
+        <div className="flex justify-center items-center">
+          <div className="flex items-center justify-start">
+            <p className="text-sm font-medium text-secondary-700 mr-2">
+              {user.role}
             </p>
-            <span className="text-xs font-medium text-secondary-700">
-              assigned
-            </span>
           </div>
-          <div className="flex justify-start items-end mr-2">
-            <p className="text-lg font-medium text-secondary-700">
-              {completedTasks}
-            </p>
-            <span className="text-xs font-medium text-secondary-700">
-              completed
-            </span>
-          </div>
-          <div className="flex items-center justify-between">
-            <p className="text-lg font-medium text-secondary-700">
-              {tasks ? Math.round((completedTasks / tasks) * 100) : 0}%
-            </p>
+          <div className="hover:cursor-pointer flex justify-center items-center">
+            {user.role === "owner" ? (
+              <Image
+                src="/icons/dots-black.svg"
+                width={24}
+                height={24}
+                alt="dots"
+                onClick={() => {
+                  router.push(
+                    `/organizations/${organizationId}/projects/${id}/settings`
+                  );
+                }}
+              />
+            ) : null}
           </div>
         </div>
       </div>
-
       <div>
-        {user.role === "owner" ? (
-          <ButtonSecondary
-            text="Settings"
-            handle={() => {
-              router.push(
-                `/organizations/${organizationId}/projects/${id}/settings`
-              );
-            }}
-          />
-        ) : null}
+        <TaskExtendedChunk description="Members" text={members} />
+        <TaskExtendedChunk description="Assigned Tasks" text={assignedTasks} />
       </div>
     </div>
   );
