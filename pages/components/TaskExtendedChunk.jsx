@@ -4,7 +4,7 @@ const TaskExtendedChunk = ({ description, text }) => {
   return (
     <div className="my-2 py-2">
       <p className="font-bold text-xs text-secondary-700">{description}</p>
-      <p className="text-neutral-800">{text}</p>
+      <p className="text-neutral-800 text-sm">{text}</p>
     </div>
   );
 };
