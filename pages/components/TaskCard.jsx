@@ -22,9 +22,6 @@ const TaskCard = ({
   createdAt,
   exception,
   difficulty,
-  projectId,
-  role,
-  userId,
   dueDate,
   user,
 }) => {
