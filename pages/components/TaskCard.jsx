@@ -8,7 +8,6 @@ import CreateModal from "./CreateModal";
 import Spinner from "./Spinner";
 import TextInput from "./TextInput";
 import { Field, FormikProvider, useFormik } from "formik";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -31,13 +30,12 @@ const TaskCard = ({
   const [isEditTaskModalOpen, setIsEditTaskModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [people, setPeople] = useState([]);
-  const [dateValue, setDateValue] = useState(new Date(dueDate));
   const router = useRouter();
 
   const getUser = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/users/${assigneeId}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/${assigneeId}`,
         {
           withCredentials: true,
         }
@@ -80,9 +78,13 @@ const TaskCard = ({
       try {
         setLoading(true);
 
-        await axios.put(`http://localhost:8080/api/tasks/${id}`, values, {
-          withCredentials: true,
-        });
+        await axios.put(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tasks/${id}`,
+          values,
+          {
+            withCredentials: true,
+          }
+        );
         setLoading(false);
         closeEditTaskModal();
         toast.success("Task updated successfully.");
@@ -91,7 +93,7 @@ const TaskCard = ({
         }, 2000);
       } catch (error) {
         setLoading(false);
-        toast.error(error.response.data.message);
+        toast.error(error.response?.data.message);
       }
     },
   });
@@ -111,14 +113,14 @@ const TaskCard = ({
   const getPeople = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/projects/${router.query?.project}/members`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/projects/${router.query?.project}/members`,
         {
           withCredentials: true,
         }
       );
       setPeople(response.data.data);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     }
   };
 
@@ -132,7 +134,7 @@ const TaskCard = ({
     try {
       setLoading(true);
       await axios.put(
-        `http://localhost:8080/api/tasks/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tasks/${id}`,
         {
           status,
           assigneeId,
@@ -148,7 +150,7 @@ const TaskCard = ({
       }, 1000);
     } catch (error) {
       setLoading(false);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     }
   };
 
@@ -156,7 +158,7 @@ const TaskCard = ({
     try {
       setLoading(true);
       await axios.post(
-        `http://localhost:8080/api/tasks/${id}/complete`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tasks/${id}/complete`,
         {},
         {
           withCredentials: true,
@@ -175,9 +177,12 @@ const TaskCard = ({
   const handleRemoveTask = async () => {
     try {
       setLoading(true);
-      await axios.delete(`http://localhost:8080/api/tasks/${id}`, {
-        withCredentials: true,
-      });
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tasks/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
       setLoading(false);
       toast.success("Task removed successfully.");
       setTimeout(() => {
@@ -226,11 +231,6 @@ const TaskCard = ({
               icon="edit"
               text="Edit"
               handle={openEditTaskModal}
-            />
-            <ButtonTertiary
-              icon="check"
-              text="Done"
-              handle={handleUpdateTask("done")}
             />
             <ButtonTertiary
               icon="in-progress"
