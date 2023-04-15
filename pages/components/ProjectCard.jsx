@@ -135,8 +135,16 @@ const ProjectCard = ({
         </div>
       </div>
       <div>
-        <TaskExtendedChunk description="Members" text={members} />
-        <TaskExtendedChunk description="Assigned Tasks" text={assignedTasks} />
+        <TaskExtendedChunk
+          description="Members"
+          text={members}
+          icon="task_user"
+        />
+        <TaskExtendedChunk
+          description="Assigned Tasks"
+          text={assignedTasks}
+          icon="task_point"
+        />
       </div>
     </div>
   );

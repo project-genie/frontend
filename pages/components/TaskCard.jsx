@@ -11,6 +11,7 @@ import { Field, FormikProvider, useFormik } from "formik";
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import TaskPriorityButton from "./TaskPriorityButton";
 
 const TaskCard = ({
   id,
@@ -22,8 +23,8 @@ const TaskCard = ({
   createdAt,
   exception,
   difficulty,
-  dueDate,
   user,
+  predicted_work_hours,
 }) => {
   const [assignee, setAssignee] = useState({});
   const [showExtendedTaskView, setShowExtendedTaskView] = useState(false);
@@ -214,6 +215,18 @@ const TaskCard = ({
             {assignee?.name}
           </p> */}
         </div>
+        <div className="flex justify-center items-center">
+          <Image
+            src="/icons/time.svg"
+            width={18}
+            height={18}
+            alt="time"
+            className="mr-1"
+          />
+          <p className="text-xs">
+            <b>{predicted_work_hours || "x"}</b> working hours
+          </p>
+        </div>
         <div>
           <TaskStatusButton
             id={id}
@@ -243,7 +256,7 @@ const TaskCard = ({
               handle={handleUpdateTask("backlog")}
             />
             <ButtonTertiary
-              icon="stop"
+              icon="check"
               text="Complete"
               handle={handleCompleteTask}
             />
@@ -255,16 +268,37 @@ const TaskCard = ({
           </div>
           <div className="flex justify-start items-start w-full">
             <div className="mr-10">
-              <TaskExtendedChunk description="Assignee" text={assignee?.name} />
-              <TaskExtendedChunk description="Created At" text={createdAt} />
-              <TaskExtendedChunk description="Priority" text={priority} />
+              <TaskExtendedChunk
+                description="Assignee"
+                text={assignee?.name}
+                icon="task_user"
+              />
+              <TaskExtendedChunk
+                description="Created At"
+                text={createdAt}
+                icon="task_calendar"
+              />
+              <TaskExtendedChunk
+                description="Priority"
+                text={<TaskPriorityButton priority={priority} />}
+                icon="task_priority"
+              />
             </div>
             <div>
-              <TaskExtendedChunk description="Difficulty" text={difficulty} />
-              <TaskExtendedChunk description="Status" text={status} />
+              <TaskExtendedChunk
+                description="Difficulty"
+                text={difficulty}
+                icon="task_stairs"
+              />
+              <TaskExtendedChunk
+                description="Status"
+                text={status}
+                icon="task_status"
+              />
               <TaskExtendedChunk
                 description="Exception"
                 text={exception ? "Yes" : "No"}
+                icon="task_link"
               />
             </div>
           </div>
@@ -344,6 +378,30 @@ const TaskCard = ({
                   </option>
                   <option key="high" value="high">
                     High
+                  </option>
+                </Field>
+              </div>
+
+              <div className="mb-3">
+                <label
+                  htmlFor="exception"
+                  className="block mb-1 text-sm font-medium text-neutral-800"
+                >
+                  Exception*
+                </label>
+                <Field
+                  name="exception"
+                  as="select"
+                  className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block p-2.5 w-full"
+                >
+                  <option key="default" value="" disabled>
+                    Is this an exception?
+                  </option>
+                  <option key="yes" value={true}>
+                    Yes
+                  </option>
+                  <option key="no" value={false}>
+                    No
                   </option>
                 </Field>
               </div>

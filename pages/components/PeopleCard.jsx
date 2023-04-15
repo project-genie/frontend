@@ -11,7 +11,7 @@ const PeopleCard = ({ user, person, type }) => {
   const handleRemovePersonFromOrganization = async () => {
     try {
       await axios.delete(
-        `http://localhost:8080/api/organizations/${router.query?.organization}/members/${person.user.id}`,
+        `${NEXT_PUBLIC_BACKEND_URL}/api/organizations/${router.query?.organization}/members/${person.user.id}`,
         {
           withCredentials: true,
         }
@@ -29,7 +29,7 @@ const PeopleCard = ({ user, person, type }) => {
     try {
       console.log(router.query);
       await axios.post(
-        `http://localhost:8080/api/projects/${router.query?.project}/members/remove`,
+        `${NEXT_PUBLIC_BACKEND_URL}/api/projects/${router.query?.project}/members/remove`,
         {
           userId: person.user.id,
         },
@@ -68,7 +68,7 @@ const PeopleCard = ({ user, person, type }) => {
 
       if (type === "project") {
         await axios.put(
-          `http://localhost:8080/api/projects/${router.query?.project}/members`,
+          `${NEXT_PUBLIC_BACKEND_URL}/api/projects/${router.query?.project}/members`,
           body,
           {
             withCredentials: true,
@@ -76,7 +76,7 @@ const PeopleCard = ({ user, person, type }) => {
         );
       } else if (type === "organization") {
         await axios.put(
-          `http://localhost:8080/api/organizations/${router.query?.organization}/members`,
+          `${NEXT_PUBLIC_BACKEND_URL}/api/organizations/${router.query?.organization}/members`,
           body,
           {
             withCredentials: true,
@@ -147,8 +147,16 @@ const PeopleCard = ({ user, person, type }) => {
         <p className="text-xs font-medium text-secondary-700">{person.role}</p>
       </div>
       <div>
-        <TaskExtendedChunk description="Email" text={person.user.email} />
-        <TaskExtendedChunk description="Level" text={person.user.level} />
+        <TaskExtendedChunk
+          description="Email"
+          text={person.user.email}
+          icon="mail"
+        />
+        <TaskExtendedChunk
+          description="Level"
+          text={person.user.level}
+          icon="level_chart"
+        />
       </div>
     </div>
   );

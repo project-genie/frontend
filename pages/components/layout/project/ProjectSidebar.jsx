@@ -3,6 +3,7 @@ import SidebarLink from "../../SidebarLink";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import axios from "axios";
+import Image from "next/image";
 
 const ProjectSidebar = ({ user }) => {
   const [project, setProject] = useState("");
@@ -43,18 +44,37 @@ const ProjectSidebar = ({ user }) => {
           className="lg:flex flex-col justify-center items-center mb-5"
           href={`/organizations/${router.query?.organization}`}
         >
-          <p className="font-bold text-xs text-secondary-300 uppercase">
-            Organization
-          </p>
+          <div className="flex justify-center items-center">
+            <Image
+              src="/icons/brown_corporate.svg"
+              width={18}
+              height={18}
+              alt="corporate building"
+              className="mr-1"
+            />
+
+            <p className="font-bold text-xs text-secondary-300 uppercase">
+              Organization
+            </p>
+          </div>
           <p className="underline">{organization}</p>
         </Link>
         <Link
           className="lg:flex flex-col justify-center items-center"
           href={`/organizations/${router.query?.organization}/projects/${router.query?.project}`}
         >
-          <p className="font-bold text-xs text-secondary-300 uppercase">
-            Project
-          </p>
+          <div className="flex justify-center items-center">
+            <Image
+              src="/icons/brown_project.svg"
+              width={18}
+              height={18}
+              alt="brown folder"
+              className="mr-1"
+            />
+            <p className="font-bold text-xs text-secondary-300 uppercase">
+              Project
+            </p>
+          </div>
           <p className="underline">{project}</p>
         </Link>
       </div>

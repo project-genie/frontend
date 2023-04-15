@@ -3,6 +3,7 @@ import SidebarLink from "../../SidebarLink";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import axios from "axios";
+import Image from "next/image";
 
 const OrganizationSidebar = ({ user }) => {
   const [organization, setOrganization] = React.useState("");
@@ -29,9 +30,18 @@ const OrganizationSidebar = ({ user }) => {
           className="lg:flex flex-col justify-center items-center"
           href={`/organizations/${router.query?.organization}`}
         >
-          <p className="font-bold text-xs text-secondary-300 uppercase">
-            Organization
-          </p>
+          <div className="flex justify-center items-center">
+            <Image
+              src="/icons/brown_corporate.svg"
+              width={18}
+              height={18}
+              alt="corporation building"
+              className="mr-1"
+            />
+            <p className="font-bold text-xs text-secondary-300 uppercase">
+              Organization
+            </p>
+          </div>
           <p className="underline">{organization}</p>
         </Link>
       </div>
