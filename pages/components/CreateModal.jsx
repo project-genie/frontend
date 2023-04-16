@@ -33,7 +33,10 @@ const CreateModal = ({ isOpen, closeModal, contentLabel, children }) => {
           <Image src="/icons/close.svg" alt="Cross" width={24} height={24} />
         </button>
       </div>
-      <div className="flex justify-center items-center h-full mb-10">
+      <div className="flex flex-col justify-center items-center h-full mb-10">
+        <div className="my-5">
+          <h2 className="font-bold">{contentLabel}</h2>
+        </div>
         <div className="w-[50%] p-4 flex items-center justify-center py-10">
           {children}
         </div>

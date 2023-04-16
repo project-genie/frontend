@@ -12,6 +12,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import TaskPriorityButton from "./TaskPriorityButton";
+import Button from "./Button";
+import ButtonSecondary from "./ButtonSecondary";
 
 const TaskCard = ({
   id,
@@ -27,8 +29,10 @@ const TaskCard = ({
   predicted_work_hours,
 }) => {
   const [assignee, setAssignee] = useState({});
+  const [GPTResponse, setGPTResponse] = useState("");
   const [showExtendedTaskView, setShowExtendedTaskView] = useState(false);
   const [isEditTaskModalOpen, setIsEditTaskModalOpen] = useState(false);
+  const [isGPTModalOpen, setIsGPTModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [people, setPeople] = useState([]);
   const router = useRouter();
@@ -57,12 +61,21 @@ const TaskCard = ({
   };
 
   const openEditTaskModal = () => {
-    console.log("en");
+    closeGPTModal();
     setIsEditTaskModalOpen(true);
   };
 
   const closeEditTaskModal = () => {
     setIsEditTaskModalOpen(false);
+  };
+
+  const openGPTModal = () => {
+    setIsGPTModalOpen(true);
+  };
+
+  const closeGPTModal = () => {
+    setIsGPTModalOpen(false);
+    setGPTResponse("");
   };
 
   const formik = useFormik({
@@ -194,6 +207,21 @@ const TaskCard = ({
     }
   };
 
+  const handleGPTMessage = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tasks/${id}/gpt`,
+        {
+          withCredentials: true,
+        }
+      );
+      setGPTResponse(response.data.data);
+      setLoading(false);
+    } catch (error) {
+      toast.error(error.response?.data.message);
+    }
+  };
   return (
     <div className="p-4 rounded-md bg-secondary-100 my-2">
       <div className="flex items-center justify-between">
@@ -215,7 +243,7 @@ const TaskCard = ({
             {assignee?.name}
           </p> */}
         </div>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center ">
           <Image
             src="/icons/time.svg"
             width={18}
@@ -239,32 +267,40 @@ const TaskCard = ({
       </div>
       {showExtendedTaskView && (
         <div className="flex flex-col justify-start items-start p-4 rounded-lg my-2">
-          <div className="flex justify-center">
-            <ButtonTertiary
-              icon="edit"
-              text="Edit"
-              handle={openEditTaskModal}
-            />
-            <ButtonTertiary
-              icon="in-progress"
-              text="In Progress"
-              handle={handleUpdateTask("in-progress")}
-            />
-            <ButtonTertiary
-              icon="stop"
-              text="Backlog"
-              handle={handleUpdateTask("backlog")}
-            />
-            <ButtonTertiary
-              icon="check"
-              text="Complete"
-              handle={handleCompleteTask}
-            />
-            <ButtonTertiary
-              icon="trash"
-              text="Remove"
-              handle={handleRemoveTask}
-            />
+          <div className="flex justify-between items-center w-full">
+            <div className="flex justify-start">
+              <ButtonTertiary
+                icon="edit"
+                text="Edit"
+                handle={openEditTaskModal}
+              />
+              <ButtonTertiary
+                icon="in-progress"
+                text="In Progress"
+                handle={handleUpdateTask("in-progress")}
+              />
+              <ButtonTertiary
+                icon="stop"
+                text="Backlog"
+                handle={handleUpdateTask("backlog")}
+              />
+              <ButtonTertiary
+                icon="check"
+                text="Complete"
+                handle={handleCompleteTask}
+              />
+              <ButtonTertiary
+                icon="trash"
+                text="Remove"
+                handle={handleRemoveTask}
+              />
+            </div>
+            <div className="flex justify-center">
+              <ButtonTertiary icon="gpt" text="GPT" handle={openGPTModal} />
+            </div>
+          </div>
+          <div>
+            <p className="text-sm py-2">{description}</p>
           </div>
           <div className="flex justify-start items-start w-full">
             <div className="mr-10">
@@ -437,6 +473,43 @@ const TaskCard = ({
               </button>
             </form>
           </FormikProvider>
+        </div>
+      </CreateModal>
+      <CreateModal
+        isOpen={isGPTModalOpen}
+        closeModal={closeGPTModal}
+        contentLabel="GPT"
+      >
+        <div className="w-full">
+          <div>
+            <h2 className="flex justify-center items-center my-10 text-sm">
+              GPT Response will be generated for your task description:
+            </h2>
+            <p className="flex justify-center items-center my-10 p-2 bg-neutral-100 rounded-lg text-sm">
+              {description}
+            </p>
+          </div>
+          <div className="flex justify-center items-center">
+            {loading && <Spinner />}
+            {GPTResponse ? (
+              <div className="p-2 bg-success-50 rounded-lg">
+                <p className="whitespace-pre-line text-sm">{GPTResponse}</p>
+              </div>
+            ) : (
+              !loading && (
+                <div>
+                  <Button
+                    handle={handleGPTMessage}
+                    text={"Generate GPT Message"}
+                  />
+                  <ButtonSecondary
+                    handle={openEditTaskModal}
+                    text={"Edit description"}
+                  />
+                </div>
+              )
+            )}
+          </div>
         </div>
       </CreateModal>
     </div>
