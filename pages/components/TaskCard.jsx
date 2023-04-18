@@ -184,7 +184,7 @@ const TaskCard = ({
         window.location.reload();
       }, 1000);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     }
   };
 
@@ -203,7 +203,7 @@ const TaskCard = ({
         window.location.reload();
       }, 1000);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     }
   };
 

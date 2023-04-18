@@ -36,7 +36,7 @@ const SignUpCandidate = () => {
         );
       } catch (error) {
         setLoading(false);
-        toast.error(error.response.data.message, {
+        toast.error(error.response?.data.message, {
           position: "bottom-right",
         });
         console.log("Error occured!: ", error);

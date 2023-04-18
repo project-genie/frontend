@@ -62,7 +62,7 @@ const TaskListHeader = () => {
       console.log(response.data.data);
       setPeople(response.data.data);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     }
   };
 
@@ -104,7 +104,7 @@ const TaskListHeader = () => {
       } catch (error) {
         setLoading(false);
 
-        toast.error(error.response.data.message);
+        toast.error(error.response?.data.message);
       }
     },
   });

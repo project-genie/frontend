@@ -21,7 +21,7 @@ const PeopleCard = ({ user, person, type }) => {
         window.location.reload();
       }, 3000);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     }
   };
 
@@ -42,7 +42,7 @@ const PeopleCard = ({ user, person, type }) => {
         window.location.reload();
       }, 3000);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     }
   };
 
@@ -68,7 +68,7 @@ const PeopleCard = ({ user, person, type }) => {
 
       if (type === "project") {
         await axios.put(
-          `${NEXT_PUBLIC_BACKEND_URL}/api/projects/${router.query?.project}/members`,
+          `http://localhost:8080/api/projects/${router.query?.project}/members`,
           body,
           {
             withCredentials: true,
@@ -76,7 +76,7 @@ const PeopleCard = ({ user, person, type }) => {
         );
       } else if (type === "organization") {
         await axios.put(
-          `${NEXT_PUBLIC_BACKEND_URL}/api/organizations/${router.query?.organization}/members`,
+          `http://localhost:8080/api/organizations/${router.query?.organization}/members`,
           body,
           {
             withCredentials: true,
@@ -90,14 +90,14 @@ const PeopleCard = ({ user, person, type }) => {
       }, 2000);
     } catch (error) {
       setIsOptionsOpen(false);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     }
   };
 
   return (
     <div className="p-4 rounded-md bg-secondary-100 my-2">
       <div className="flex items-center justify-between">
-        <div>
+        <div className="flex justify-center items-center">
           <Image
             className="mr-1"
             src="/icons/person.svg"
@@ -105,7 +105,9 @@ const PeopleCard = ({ user, person, type }) => {
             width={24}
             height={24}
           />
-          <h2 className="text-neutral-800 mr-1">{person.user.name}</h2>
+          <h2 className="text-sm text-neutral-800 mr-1 font-semibold">
+            {person.user.name}
+          </h2>
         </div>
 
         <div className="flex items-center justify-start relative">
