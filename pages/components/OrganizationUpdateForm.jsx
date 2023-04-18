@@ -57,7 +57,7 @@ const OrganizationUpdateForm = () => {
         }, 2000);
       } catch (error) {
         setLoading(false);
-        toast.error(error.response.data.message);
+        toast.error(error.response?.data.message);
       }
     },
   });
@@ -85,7 +85,7 @@ const OrganizationUpdateForm = () => {
       }, 2000);
     } catch (error) {
       setLoading(false);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     }
   };
 

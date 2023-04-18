@@ -20,7 +20,7 @@ const CurrentUserInviteCard = ({ invite }) => {
         window.location.reload();
       }, 3000);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     }
   };
 
@@ -40,7 +40,7 @@ const CurrentUserInviteCard = ({ invite }) => {
         window.location.reload();
       }, 3000);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     }
   };
 

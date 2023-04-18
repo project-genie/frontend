@@ -38,11 +38,10 @@ const OrganizationSidebar = ({ user }) => {
               alt="corporation building"
               className="mr-1"
             />
-            <p className="font-bold text-xs text-secondary-300 uppercase">
-              Organization
+            <p className="font-bold text-xs text-primary-400 uppercase">
+              {organization}
             </p>
           </div>
-          <p className="underline">{organization}</p>
         </Link>
       </div>
       <div className="flex lg:flex-col lg:justify-start justify-center items-center lg:mt-4">
@@ -50,6 +49,7 @@ const OrganizationSidebar = ({ user }) => {
           href={`/organizations/${router.query?.organization}`}
           text="Summary"
           isActive={router.pathname === `/organizations/[organization]`}
+          icon={"dashboard"}
         />
         <SidebarLink
           href={`/organizations/${router.query?.organization}/projects`}
@@ -57,11 +57,13 @@ const OrganizationSidebar = ({ user }) => {
           isActive={
             router.pathname === `/organizations/[organization]/projects`
           }
+          icon={"brown_folder"}
         />
         <SidebarLink
           href={`/organizations/${router.query?.organization}/people`}
           text="People"
           isActive={router.pathname === `/organizations/[organization]/people`}
+          icon={"users"}
         />
         {user.role === "owner" && (
           <SidebarLink
@@ -70,6 +72,7 @@ const OrganizationSidebar = ({ user }) => {
             isActive={
               router.pathname === `/organizations/[organization]/settings`
             }
+            icon={"settings"}
           />
         )}
       </div>

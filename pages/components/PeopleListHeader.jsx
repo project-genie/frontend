@@ -51,7 +51,9 @@ const PeopleListHeader = ({ user, type }) => {
 
   useEffect(() => {
     if (router.isReady) {
-      getPotentialMembers();
+      if (type === "project") {
+        getPotentialMembers();
+      }
     }
   }, [router.isReady]);
 
@@ -77,7 +79,7 @@ const PeopleListHeader = ({ user, type }) => {
         }, 2000);
       } catch (error) {
         setLoading(false);
-        toast.error(error.response.data.message);
+        toast.error(error.response?.data.message);
       }
     },
   });
