@@ -43,10 +43,12 @@ const TaskList = ({ user }) => {
             status={task.status}
             assigneeId={task.assigneeId}
             createdAt={task.created_date}
+            startedAt={task.started_date}
             exception={task.exception}
             difficulty={task.difficulty}
             user={user}
             predicted_work_hours={task.predicted_work_hours}
+            predicted_completion_date={task.predicted_completion_date}
           />
         ))}
       </div>

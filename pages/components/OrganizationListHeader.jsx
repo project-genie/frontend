@@ -59,7 +59,7 @@ const OrganizationListHeader = () => {
           width={24}
           height={24}
         />
-        <h1>Organizations</h1>
+        <h1 className="font-bold uppercase text-neutral-800">Organizations</h1>
       </div>
       <Button
         handle={() => openCreateOrganizationModal()}

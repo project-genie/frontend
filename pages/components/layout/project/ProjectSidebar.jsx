@@ -71,7 +71,7 @@ const ProjectSidebar = ({ user }) => {
                 alt="brown folder"
                 className="mr-1"
               />
-              <p className="font-bold text-xs text-primary-400 uppercase">
+              <p className="font-bold text-xs text-neutral-100 uppercase underline">
                 {project}
               </p>
             </div>

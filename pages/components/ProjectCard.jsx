@@ -104,10 +104,10 @@ const ProjectCard = ({
             className="mr-1"
             src="/icons/folder.svg"
             alt="Folder"
-            width={24}
-            height={24}
+            width={20}
+            height={20}
           />
-          <h2 className="text-neutral-800 underline mr-1 hover:cursor-pointer">
+          <h2 className="text-sm text-neutral-800 underline mr-1 hover:cursor-pointer">
             {name}
           </h2>
         </div>
@@ -120,7 +120,7 @@ const ProjectCard = ({
           <div className="hover:cursor-pointer flex justify-center items-center">
             {user.role === "owner" ? (
               <Image
-                src="/icons/dots-black.svg"
+                src="/icons/settings.svg"
                 width={24}
                 height={24}
                 alt="dots"

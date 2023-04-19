@@ -41,14 +41,14 @@ const OrganizationCard = ({ organization }) => {
             className="mr-1"
             src="/icons/corporation.svg"
             alt="Corporation building"
-            width={24}
-            height={24}
+            width={20}
+            height={20}
           />
-          <h2 className="text-neutral-800 underline mr-1 hover:cursor-pointer">
+          <h2 className="text-sm text-neutral-800 underline mr-1 hover:cursor-pointer">
             {organization?.name}
           </h2>
         </div>
-        <div className="hover:cursor-pointer flex justify-center items-center">
+        <div className="flex justify-center items-center">
           <div>
             <p className="text-xs font-medium text-secondary-700 mr-2">
               {organization?.organization_members[0].role}
@@ -56,13 +56,14 @@ const OrganizationCard = ({ organization }) => {
           </div>
           {user.role === "owner" && (
             <Image
-              src="/icons/dots-black.svg"
+              src="/icons/settings.svg"
               width={24}
               height={24}
-              alt="dots"
+              alt="gear"
               onClick={() => {
                 router.push(`/organizations/${organization?.id}/settings`);
               }}
+              className="hover:cursor-pointer"
             />
           )}
         </div>

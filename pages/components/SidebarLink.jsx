@@ -7,8 +7,8 @@ const SidebarLink = ({ href, text, isActive, icon }) => {
     <Link
       href={`${href}`}
       className={`${
-        isActive && "bg-primary-700"
-      } mt-2 text-secondary-300 text-xs font-bold w-[80%] py-4 px-6 rounded-lg flex justify-left items-center hover:bg-primary-700 }`}
+        isActive && "bg-neutral-700"
+      } mt-2 text-secondary-300 text-xs font-bold w-[80%] py-4 px-6 rounded-lg flex justify-left items-center hover:bg-neutral-600 }`}
     >
       <Image
         src={`/icons/${icon}.svg`}

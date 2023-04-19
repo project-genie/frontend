@@ -23,10 +23,12 @@ const TaskCard = ({
   status,
   assigneeId,
   createdAt,
+  startedAt,
   exception,
   difficulty,
   user,
   predicted_work_hours,
+  predicted_completion_date,
 }) => {
   const [assignee, setAssignee] = useState({});
   const [GPTResponse, setGPTResponse] = useState("");
@@ -35,6 +37,8 @@ const TaskCard = ({
   const [isGPTModalOpen, setIsGPTModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [people, setPeople] = useState([]);
+  const [remainingHours, setRemainingHours] = useState(null);
+
   const router = useRouter();
 
   const getUser = async () => {
@@ -55,6 +59,20 @@ const TaskCard = ({
   useEffect(() => {
     getUser();
   }, []);
+
+  const calculateRemainingHours = () => {
+    const diffInMs =
+      new Date(predicted_completion_date).getTime() - new Date().getTime();
+    const diffInHours = diffInMs / (1000 * 60 * 60);
+    console.log(diffInHours);
+    setRemainingHours(diffInHours.toFixed(0));
+  };
+
+  useEffect(() => {
+    if (startedAt && predicted_completion_date) {
+      calculateRemainingHours();
+    }
+  }, [predicted_completion_date, startedAt]);
 
   const handleExtendedTaskView = () => {
     setShowExtendedTaskView(!showExtendedTaskView);
@@ -226,24 +244,24 @@ const TaskCard = ({
     <div className="p-4 rounded-md bg-secondary-100 my-2">
       <div className="flex items-center justify-between">
         <div
-          className="flex justify-center items-center"
+          className="flex justify-start items-center w-32"
           onClick={handleExtendedTaskView}
         >
           <Image
             className="mr-1"
             src="/icons/golf.svg"
             alt="golf hole"
-            width={24}
-            height={24}
+            width={20}
+            height={20}
           />
-          <h2 className="text-neutral-800 underline hover:cursor-pointer">
+          <h2 className="text-neutral-800 underline hover:cursor-pointer text-sm overflow-hidden whitespace-nowrap overflow-ellipsis">
             {name}
           </h2>
           {/* <p className="text-sm font-medium text-secondary-700 underline hover:cursor-pointer">
             {assignee?.name}
           </p> */}
         </div>
-        <div className="flex justify-center items-center ">
+        <div className="flex justify-start items-center">
           <Image
             src="/icons/time.svg"
             width={18}
@@ -251,8 +269,16 @@ const TaskCard = ({
             alt="time"
             className="mr-1"
           />
-          <p className="text-xs">
-            <b>{predicted_work_hours || "x"}</b> working hours
+          <p className={`${startedAt && "text-primary-400"} text-xs`}>
+            {remainingHours ? (
+              <span>
+                <b>{remainingHours}</b> hours remaining
+              </span>
+            ) : (
+              <span>
+                <b>{predicted_work_hours || "x"}</b> working hours
+              </span>
+            )}
           </p>
         </div>
         <div>
@@ -300,6 +326,7 @@ const TaskCard = ({
             </div>
           </div>
           <div>
+            <h2 className="text-neutral-800 text-sm font-semibold">{name}</h2>
             <p className="text-sm py-2">{description}</p>
           </div>
           <div className="flex justify-start items-start w-full">
