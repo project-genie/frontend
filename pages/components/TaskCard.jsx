@@ -6,14 +6,11 @@ import TaskExtendedChunk from "./TaskExtendedChunk";
 import ButtonTertiary from "./ButtonTertiary";
 import CreateModal from "./CreateModal";
 import Spinner from "./Spinner";
-import TextInput from "./TextInput";
-import { Field, FormikProvider, useFormik } from "formik";
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import TaskPriorityButton from "./TaskPriorityButton";
 import Button from "./Button";
-import ButtonSecondary from "./ButtonSecondary";
 
 const TaskCard = ({
   id,
@@ -78,15 +75,6 @@ const TaskCard = ({
     setShowExtendedTaskView(!showExtendedTaskView);
   };
 
-  const openEditTaskModal = () => {
-    closeGPTModal();
-    setIsEditTaskModalOpen(true);
-  };
-
-  const closeEditTaskModal = () => {
-    setIsEditTaskModalOpen(false);
-  };
-
   const openGPTModal = () => {
     setIsGPTModalOpen(true);
   };
@@ -95,52 +83,6 @@ const TaskCard = ({
     setIsGPTModalOpen(false);
     setGPTResponse("");
   };
-
-  const formik = useFormik({
-    initialValues: {
-      name,
-      description,
-      priority,
-      status,
-      assigneeId,
-      exception,
-      difficulty,
-    },
-    onSubmit: async (values) => {
-      try {
-        setLoading(true);
-
-        await axios.put(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tasks/${id}`,
-          values,
-          {
-            withCredentials: true,
-          }
-        );
-        setLoading(false);
-        closeEditTaskModal();
-        toast.success("Task updated successfully.");
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      } catch (error) {
-        setLoading(false);
-        toast.error(error.response?.data.message);
-      }
-    },
-  });
-
-  useEffect(() => {
-    formik.setValues({
-      name,
-      description,
-      priority,
-      status,
-      assigneeId,
-      exception,
-      difficulty,
-    });
-  }, [isEditTaskModalOpen, name, description]);
 
   const getPeople = async () => {
     try {
@@ -169,7 +111,6 @@ const TaskCard = ({
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tasks/${id}`,
         {
           status,
-          assigneeId,
         },
         {
           withCredentials: true,
@@ -282,24 +223,13 @@ const TaskCard = ({
           </p>
         </div>
         <div>
-          <TaskStatusButton
-            id={id}
-            status={status}
-            assigneeId={assigneeId}
-            user={user}
-            taskId={id}
-          />
+          <TaskStatusButton id={id} status={status} user={user} taskId={id} />
         </div>
       </div>
       {showExtendedTaskView && (
         <div className="flex flex-col justify-start items-start p-4 rounded-lg my-2">
           <div className="flex justify-between items-center w-full">
             <div className="flex justify-start">
-              <ButtonTertiary
-                icon="edit"
-                text="Edit"
-                handle={openEditTaskModal}
-              />
               <ButtonTertiary
                 icon="in-progress"
                 text="In Progress"
@@ -367,141 +297,7 @@ const TaskCard = ({
           </div>
         </div>
       )}
-      <CreateModal
-        isOpen={isEditTaskModalOpen}
-        closeModal={closeEditTaskModal}
-        contentLabel="Edit Task"
-      >
-        <div className="w-full">
-          <div className="mb-6">
-            <h2 className="font-medium text-lg">Edit task.</h2>
-          </div>
-          <FormikProvider value={formik}>
-            <form onSubmit={formik.handleSubmit}>
-              <TextInput
-                id="name"
-                label="Name"
-                onChange={formik.handleChange}
-                value={formik.values.name}
-                required={true}
-                placeholder={"Enter task name"}
-              />
-              <TextInput
-                id="description"
-                label="Description"
-                onChange={formik.handleChange}
-                value={formik.values.description}
-                required={true}
-                placeholder={"Enter task description"}
-              />
 
-              <div className="mb-3">
-                <label
-                  htmlFor="assigneeId"
-                  className="block mb-1 text-sm font-medium text-neutral-800"
-                >
-                  Assignee*
-                </label>
-                <Field
-                  name="assigneeId"
-                  as="select"
-                  className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block p-2.5 w-full"
-                >
-                  <option key="default" value="" disabled>
-                    Select an assignee
-                  </option>
-                  {people.map((person) => (
-                    <option key={person.id} value={person.id}>
-                      {person.user.name}
-                    </option>
-                  ))}
-                </Field>
-              </div>
-
-              <div className="mb-3">
-                <label
-                  htmlFor="priority"
-                  className="block mb-1 text-sm font-medium text-neutral-800"
-                >
-                  Priority*
-                </label>
-                <Field
-                  name="priority"
-                  as="select"
-                  className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block p-2.5 w-full"
-                >
-                  <option key="default" value="" disabled>
-                    Select priority
-                  </option>
-                  <option key="low" value="low">
-                    Low
-                  </option>
-                  <option key="medium" value="medium">
-                    Medium
-                  </option>
-                  <option key="high" value="high">
-                    High
-                  </option>
-                </Field>
-              </div>
-
-              <div className="mb-3">
-                <label
-                  htmlFor="exception"
-                  className="block mb-1 text-sm font-medium text-neutral-800"
-                >
-                  Exception*
-                </label>
-                <Field
-                  name="exception"
-                  as="select"
-                  className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block p-2.5 w-full"
-                >
-                  <option key="default" value="" disabled>
-                    Is this an exception?
-                  </option>
-                  <option key="yes" value={true}>
-                    Yes
-                  </option>
-                  <option key="no" value={false}>
-                    No
-                  </option>
-                </Field>
-              </div>
-
-              <div className="mb-3">
-                <label
-                  htmlFor="difficulty"
-                  className="block mb-1 text-sm font-medium text-neutral-800"
-                >
-                  Difficulty*
-                </label>
-                <Field
-                  name="difficulty"
-                  as="select"
-                  className="bg-transparent border border-neutral-800 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block p-2.5 w-full"
-                >
-                  <option key="default" value="" disabled>
-                    Select difficulty
-                  </option>
-                  {[...Array(10)].map((_, index) => (
-                    <option key={index + 1} value={index + 1}>
-                      {index + 1}
-                    </option>
-                  ))}
-                </Field>
-              </div>
-
-              <button
-                type="submit"
-                className="text-neutral-50 bg-primary-500 hover:bg-primary-600 focus:ring-4 focus:outline-none focus:ring-primary-500 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-              >
-                {loading ? <Spinner /> : <p>Edit</p>}
-              </button>
-            </form>
-          </FormikProvider>
-        </div>
-      </CreateModal>
       <CreateModal
         isOpen={isGPTModalOpen}
         closeModal={closeGPTModal}
@@ -528,10 +324,6 @@ const TaskCard = ({
                   <Button
                     handle={handleGPTMessage}
                     text={"Generate GPT Message"}
-                  />
-                  <ButtonSecondary
-                    handle={openEditTaskModal}
-                    text={"Edit description"}
                   />
                 </div>
               )

@@ -89,6 +89,15 @@ const ProjectSidebar = ({ user }) => {
           icon={"dashboard"}
         />
         <SidebarLink
+          href={`/organizations/${router.query?.organization}/projects/${router.query?.project}/taskcandidates`}
+          text="Task Candidates"
+          isActive={
+            router.pathname ===
+            `/organizations/[organization]/projects/[project]/taskcandidates`
+          }
+          icon={"candidate_task"}
+        />
+        <SidebarLink
           href={`/organizations/${router.query?.organization}/projects/${router.query?.project}/tasks`}
           text="Tasks"
           isActive={

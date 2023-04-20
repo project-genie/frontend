@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import CompletedTaskCard from "./CompletedTaskCard";
+import CompletedTaskListHeader from "./CompletedTaskListHeader";
 
 const CompletedTaskList = ({ user }) => {
   const router = useRouter();
@@ -31,26 +32,10 @@ const CompletedTaskList = ({ user }) => {
 
   return (
     <div>
+      <CompletedTaskListHeader />
       <div className="">
         {tasks.map((task) => (
-          <CompletedTaskCard
-            key={task.id}
-            id={task.id}
-            name={task.name}
-            description={task.description}
-            priority={task.priority}
-            status={task.status}
-            assigneeId={task.user_id}
-            dueDate={task.dueDate}
-            createdBy={task.createdBy}
-            createdAt={task.created_date}
-            exception={task.exception}
-            difficulty={task.difficulty}
-            projectId={task.project_id}
-            role={user.role}
-            userId={user.id}
-            user={user}
-          />
+          <CompletedTaskCard key={task.id} id={task.task_id} />
         ))}
       </div>
     </div>
