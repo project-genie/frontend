@@ -33,13 +33,9 @@ const ProjectListHeader = ({ user }) => {
       formik.values.organizationId = router.query.organization;
       try {
         setLoading(true);
-        const response = await axios.post(
-          "http://localhost:8080/api/projects",
-          values,
-          {
-            withCredentials: true,
-          }
-        );
+        await axios.post("http://localhost:8080/api/projects", values, {
+          withCredentials: true,
+        });
         setLoading(false);
         closeCreateProjectModal();
         toast.success("Project created successfully.");

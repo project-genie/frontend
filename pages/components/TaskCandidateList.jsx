@@ -28,7 +28,7 @@ const TaskCandidateList = ({ user, owner }) => {
   const getAllTaskCandidates = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/tasks/candidate`,
+        `http://localhost:8080/api/tasks/candidate/${router.query.project}/all`,
         {
           withCredentials: true,
         }

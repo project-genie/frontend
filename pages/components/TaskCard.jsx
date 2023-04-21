@@ -61,7 +61,6 @@ const TaskCard = ({
     const diffInMs =
       new Date(predicted_completion_date).getTime() - new Date().getTime();
     const diffInHours = diffInMs / (1000 * 60 * 60);
-    console.log(diffInHours);
     setRemainingHours(diffInHours.toFixed(0));
   };
 
