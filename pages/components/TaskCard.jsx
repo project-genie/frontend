@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import TaskPriorityButton from "./TaskPriorityButton";
 import Button from "./Button";
+import InfoPopUp from "./InfoPopUp";
 
 const TaskCard = ({
   id,
@@ -209,16 +210,23 @@ const TaskCard = ({
             alt="time"
             className="mr-1"
           />
-          <p className={`${startedAt && "text-primary-400"} text-xs`}>
+          <p
+            className={`${
+              startedAt && "text-primary-400"
+            } text-xs flex justify-center items-center`}
+          >
             {remainingHours ? (
               <span>
                 <b>{remainingHours}</b> hours remaining
               </span>
             ) : (
-              <span>
+              <span className="mr-1">
                 <b>{predicted_work_hours || "x"}</b> working hours
               </span>
             )}
+            <span>
+              <InfoPopUp text="Working hours is calculated as 8 hours a day. When the task becomes 'in progress', you will see the 24-hour scale remaining time." />
+            </span>
           </p>
         </div>
         <div>
