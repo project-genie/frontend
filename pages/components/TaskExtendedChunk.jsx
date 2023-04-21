@@ -3,7 +3,7 @@ import React from "react";
 
 const TaskExtendedChunk = ({ description, text, icon }) => {
   return (
-    <div className="flex flex-col justify-start items-start mt-2 pt-2">
+    <div className="flex justify-start items-center mt-2 pt-2">
       <div className="flex justify-start items-start">
         <Image
           src={`/icons/${icon}.svg`}
@@ -14,7 +14,7 @@ const TaskExtendedChunk = ({ description, text, icon }) => {
         />
         <p className="font-bold text-xs text-secondary-700">{description}</p>
       </div>
-      <p className="text-neutral-800 text-sm">{text}</p>
+      <p className="ml-2 text-secondary-900 text-sm font-semibold">{text}</p>
     </div>
   );
 };

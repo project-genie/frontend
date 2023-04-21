@@ -275,7 +275,11 @@ const TaskCard = ({
               />
               <TaskExtendedChunk
                 description="Created At"
-                text={createdAt}
+                text={
+                  new Date(createdAt).toDateString() +
+                  " " +
+                  new Date(createdAt).toLocaleTimeString()
+                }
                 icon="task_calendar"
               />
               <TaskExtendedChunk

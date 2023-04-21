@@ -16,9 +16,9 @@ const ProjectCard = ({
   const [user, setUser] = useState({});
   const [tasks, setTasks] = useState(0);
   const [assignedTasks, setAssignedTasks] = useState(0);
+  const [openTasks, setOpenTasks] = useState(0);
   const [completedTasks, setCompletedTasks] = useState(0);
   const [allCompletedTasks, setAllCompletedTasks] = useState(0);
-  const [percentage, setPercentage] = useState(0);
   const [members, setMembers] = useState(0);
   const router = useRouter();
 
@@ -33,6 +33,12 @@ const ProjectCard = ({
         response.data.data.forEach((task) => {
           if (task.status === "completed") {
             setAllCompletedTasks(allCompletedTasks + 1);
+          }
+        });
+
+        response.data.data.forEach((task) => {
+          if (task.status !== "completed") {
+            setOpenTasks(openTasks + 1);
           }
         });
 
@@ -140,6 +146,17 @@ const ProjectCard = ({
           text={members}
           icon="task_user"
         />
+        <TaskExtendedChunk
+          description="Open Tasks"
+          text={openTasks}
+          icon="brown_golf"
+        />
+        <TaskExtendedChunk
+          description="Completed Tasks"
+          text={allCompletedTasks}
+          icon="brown_golf"
+        />
+
         <TaskExtendedChunk
           description="Assigned Tasks"
           text={assignedTasks}
