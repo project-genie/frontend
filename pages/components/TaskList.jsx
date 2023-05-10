@@ -17,7 +17,7 @@ const TaskList = ({ user }) => {
           withCredentials: true,
         }
       );
-      setTasks(response.data.data);
+      setTasks(response?.data.data);
     } catch (error) {
       toast.error(error.response?.data.message);
     }
