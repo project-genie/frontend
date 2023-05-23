@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import Image from "next/image";
 import TaskExtendedChunk from "./TaskExtendedChunk";
+import Button from "./Button";
+import ButtonError from "./ButtonError";
 
 const PeopleCard = ({ user, person, type }) => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
@@ -94,6 +96,49 @@ const PeopleCard = ({ user, person, type }) => {
     }
   };
 
+  const handleIncreaseUserLevel = async () => {
+    try {
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/${person.user.id}`,
+        {
+          level: person.user.level + 1,
+          organizationId: router.query?.organization,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success("Level increased successfully.");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data.message);
+    }
+  };
+
+  const handleDecreaseUserLevel = async () => {
+    try {
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/${person.user.id}`,
+        {
+          level: person.user.level - 1,
+          organizationId: router.query?.organization,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success("Level decreased successfully.");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (error) {
+      toast.error(error.response?.data.message);
+    }
+  };
+
   return (
     <div className="p-4 rounded-md bg-secondary-100 my-2">
       <div className="flex items-center justify-between">
@@ -154,11 +199,19 @@ const PeopleCard = ({ user, person, type }) => {
           text={person.user.email}
           icon="mail"
         />
-        <TaskExtendedChunk
-          description="Level"
-          text={person.user.level}
-          icon="level_chart"
-        />
+        <div className="flex justify-start items-center">
+          <TaskExtendedChunk
+            description="Level"
+            text={person.user.level}
+            icon="level_chart"
+          />
+          {user.role === "owner" && (
+            <div>
+              <Button handle={handleIncreaseUserLevel} text={"Increase"} />
+              <ButtonError handle={handleDecreaseUserLevel} text={"Decrease"} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

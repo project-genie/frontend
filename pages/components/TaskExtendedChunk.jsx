@@ -3,7 +3,7 @@ import React from "react";
 
 const TaskExtendedChunk = ({ description, text, icon }) => {
   return (
-    <div className="flex justify-start items-center mt-2 pt-2">
+    <div className="flex justify-start items-center my-2 py-2">
       <div className="flex justify-start items-start">
         <Image
           src={`/icons/${icon}.svg`}
