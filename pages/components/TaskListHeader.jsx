@@ -8,6 +8,7 @@ import CreateModal from "./CreateModal";
 import Spinner from "./Spinner";
 import TextInput from "./TextInput";
 import "react-datepicker/dist/react-datepicker.css";
+import Image from "next/image";
 
 const TaskListHeader = () => {
   const [user, setUser] = useState({});
@@ -98,7 +99,16 @@ const TaskListHeader = () => {
 
   return (
     <div className="flex justify-between items-center border-b border-b-secondary-400">
-      <h1>Tasks</h1>
+      <div className="flex justify-center items-center">
+        <Image
+          className="mr-1"
+          src="/icons/brown_golf.svg"
+          alt="Golf hole"
+          width={20}
+          height={20}
+        />
+        <h1 className="font-bold uppercase text-neutral-800">Tasks</h1>
+      </div>
       <Button
         text="Create Task"
         handle={() => {

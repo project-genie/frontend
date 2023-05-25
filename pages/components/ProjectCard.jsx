@@ -12,6 +12,7 @@ const ProjectCard = ({
   role,
   userId,
   organizationId,
+  type,
 }) => {
   const [user, setUser] = useState({});
   const [tasks, setTasks] = useState(0);
@@ -98,7 +99,15 @@ const ProjectCard = ({
   }, []);
 
   return (
-    <div className="p-4 rounded-md bg-secondary-100 my-2">
+    <div className="p-4 rounded-md bg-secondary-100 my-2 relative border border-secondary-600">
+      <div className="absolute right-2 bottom-2 bg-secondary-600 p-3 rounded-full">
+        <Image
+          src={type === "waterfall" ? "/icons/water.svg" : "/icons/sprint.svg"}
+          width={40}
+          height={40}
+          alt={type === "waterfall" ? "Waterfall" : "Sprint"}
+        />
+      </div>
       <div className="flex items-center justify-between">
         <div
           className="flex items-center justify-center"

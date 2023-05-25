@@ -19,6 +19,7 @@ const ProjectList = ({ user }) => {
       })
       .then((response) => {
         setProjects(response.data.data);
+        console.log("resp: ", response.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -41,6 +42,7 @@ const ProjectList = ({ user }) => {
             role={user.role}
             userId={user.id}
             organizationId={project.organizationId}
+            type={project.type}
           />
         ))}
       </div>

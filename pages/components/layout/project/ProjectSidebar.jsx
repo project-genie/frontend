@@ -6,7 +6,7 @@ import axios from "axios";
 import Image from "next/image";
 
 const ProjectSidebar = ({ user }) => {
-  const [project, setProject] = useState("");
+  const [project, setProject] = useState({});
   const router = useRouter();
 
   const getProject = async () => {
@@ -16,7 +16,7 @@ const ProjectSidebar = ({ user }) => {
         withCredentials: true,
       }
     );
-    setProject(response.data.data.name);
+    setProject(response.data.data);
   };
 
   const [organization, setOrganization] = useState("");
@@ -72,7 +72,7 @@ const ProjectSidebar = ({ user }) => {
                 className="mr-1"
               />
               <p className="font-bold text-xs text-neutral-100 uppercase underline">
-                {project}
+                {project.name}
               </p>
             </div>
           </Link>
@@ -88,6 +88,20 @@ const ProjectSidebar = ({ user }) => {
           }
           icon={"dashboard"}
         />
+        {project.type === "agile" && (
+          <SidebarLink
+            href={`/organizations/${router.query?.organization}/projects/${router.query?.project}/sprints`}
+            text="Sprints"
+            isActive={
+              router.pathname ===
+                `/organizations/[organization]/projects/[project]/sprints/[sprint]` ||
+              router.pathname ===
+                `/organizations/[organization]/projects/[project]/sprints`
+            }
+            icon={"sprint-brown"}
+          />
+        )}
+
         <SidebarLink
           href={`/organizations/${router.query?.organization}/projects/${router.query?.project}/taskcandidates`}
           text="Task Candidates"

@@ -11,7 +11,6 @@ import {
 } from "recharts";
 
 const AllProjectsTasksChart = ({ data }) => {
-  console.log("inside data: ", data);
   return (
     <div className="h-full">
       <div className="flex justify-center items-center">

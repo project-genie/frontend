@@ -14,7 +14,7 @@ const TextInput = ({
     <div className="mb-3">
       <label
         htmlFor={id}
-        className="block mb-1 text-sm font-medium text-neutral-800"
+        className="block mb-1 text-sm font-medium text-secondary-900"
       >
         {label}
         {required ? "*" : ""}
@@ -22,7 +22,7 @@ const TextInput = ({
       <input
         type={type}
         id={id}
-        className="bg-transparent border border-neutral-800 disabled:bg-neutral-100 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block p-2.5 w-full"
+        className="bg-transparent border border-secondary-800 disabled:bg-neutral-100 text-neutral-800 text-sm rounded-lg  focus:ring-primary-500 focus:border-primary-500 outline-primary-500 block p-2.5 w-full"
         placeholder={placeholder}
         onChange={onChange}
         value={value}

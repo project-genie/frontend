@@ -2,7 +2,6 @@ import React from "react";
 import { Pie, PieChart, ResponsiveContainer } from "recharts";
 
 const TasksPieChart = ({ data }) => {
-  console.log("inside data: ", data);
   return (
     <div className="h-full py-10">
       <div className="flex justify-center items-center">
