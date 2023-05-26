@@ -4,9 +4,11 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { toast } from "react-toastify";
 import SprintHeader from "@/pages/components/SprintHeader";
+import SprintRequirementList from "@/pages/components/SprintRequirementList";
 
 const Sprint = () => {
   const [sprint, setSprint] = useState({});
+
   const [user, setUser] = useState({});
 
   const router = useRouter();
@@ -37,7 +39,7 @@ const Sprint = () => {
     try {
       await axios
         .get(
-          `http://localhost:8080/api/projects/sprint/${router.query?.sprint}`,
+          `http://localhost:8080/api/sprints/sprint/${router.query?.sprint}`,
           {
             withCredentials: true,
           }
@@ -59,17 +61,22 @@ const Sprint = () => {
 
   return (
     <ProjectLayout>
-      <div className="flex flex-col justify-center items-center m-2">
-        <SprintHeader
-          name={sprint.name}
-          description={sprint.description}
-          startDate={sprint.startDate}
-          endDate={sprint.endDate}
-          user={user}
-          phase={sprint.phase}
-        />
+      <div className="flex flex-col justify-center items-center ">
+        <div className="flex flex-col justify-center items-center m-4 w-[50%]">
+          <SprintHeader
+            name={sprint.name}
+            description={sprint.description}
+            startDate={sprint.startDate}
+            endDate={sprint.endDate}
+            user={user}
+            phase={sprint.phase}
+          />
+        </div>
+
+        <div className="w-[80%] bg-secondary-50 rounded-lg mt-10">
+          <SprintRequirementList user={user} />
+        </div>
       </div>
-      <div>ı am sprint</div>
     </ProjectLayout>
   );
 };

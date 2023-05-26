@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import TextInput from "./TextInput";
+import * as Yup from "yup";
 
 const CreateSprintCard = () => {
   const router = useRouter();
@@ -15,17 +16,29 @@ const CreateSprintCard = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
+  const CreateSprintSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(3, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Name is required."),
+    description: Yup.string()
+      .min(3, "Too Short!")
+      .max(100, "Too Long!")
+      .required("Description is required."),
+  });
+
   const formik = useFormik({
     initialValues: {
       name: "",
       description: "",
     },
+    validationSchema: CreateSprintSchema,
     onSubmit: async (values) => {
       try {
         setLoading(true);
         await axios
           .post(
-            `http://localhost:8080/api/projects/sprints/${router.query?.project}`,
+            `http://localhost:8080/api/sprints/${router.query?.project}`,
             {
               name: values.name,
               description: values.description,
@@ -51,7 +64,6 @@ const CreateSprintCard = () => {
         }, 2000);
       } catch (error) {
         setLoading(false);
-        toast.error(error.response?.data.message);
       }
     },
   });
@@ -139,6 +151,18 @@ const CreateSprintCard = () => {
                 <p>Create</p>
               </button>
             </div>
+
+            {formik.errors.name && formik.touched.name ? (
+              <div className="my-2 flex justify-center items-center text-primary-600">
+                {formik.errors.name}
+              </div>
+            ) : null}
+
+            {formik.errors.description && formik.touched.description ? (
+              <div className="my-2 flex justify-center items-center text-primary-600">
+                {formik.errors.description}
+              </div>
+            ) : null}
           </>
         )}
       </form>

@@ -18,6 +18,7 @@ const SprintHeader = ({
   useEffect(() => {
     setFormattedStartDate(new Date(startDate).toLocaleDateString());
     setFormattedEndDate(new Date(endDate).toLocaleDateString());
+    console.log("new date: ", new Date(startDate));
     if (new Date(startDate) < new Date()) {
       setStatus("active");
     } else {
@@ -26,7 +27,7 @@ const SprintHeader = ({
   }, [startDate, endDate]);
 
   return (
-    <div className="relative border border-secondary-700 rounded-md w-1/2 p-4 flex flex-col justify-center items-start">
+    <div className="relative border border-secondary-700 rounded-md p-4 flex flex-col justify-center items-start w-full">
       <div>
         <h1 className="font-bold text-primary-500">Sprint</h1>
         <p className="font-bold text-primary-800 mb-4">{name}</p>

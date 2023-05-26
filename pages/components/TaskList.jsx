@@ -17,6 +17,7 @@ const TaskList = ({ user }) => {
           withCredentials: true,
         }
       );
+      console.log("all tasks: ", response.data.data);
       setTasks(response?.data.data);
     } catch (error) {
       toast.error(error.response?.data.message);
@@ -30,7 +31,7 @@ const TaskList = ({ user }) => {
   }, [router.isReady]);
 
   return (
-    <div>
+    <div className="my-4">
       <TaskListHeader />
       <div className="">
         {tasks.map((task) => (
@@ -47,8 +48,8 @@ const TaskList = ({ user }) => {
             exception={task.exception}
             difficulty={task.difficulty}
             user={user}
-            predicted_work_hours={task.predicted_work_hours}
-            predicted_completion_date={task.predicted_completion_date}
+            predicted_work_hours={task?.predicted_work_hours}
+            predicted_completion_date={task?.predicted_completion_date}
           />
         ))}
       </div>

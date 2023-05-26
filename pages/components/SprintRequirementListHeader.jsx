@@ -3,26 +3,26 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Button from "./Button";
 
-const SprintListHeader = ({ user }) => {
+const SprintRequirementListHeader = ({ user }) => {
   const router = useRouter();
   return (
     <div className="flex justify-between items-center border-b border-b-secondary-400">
       <div className="flex justify-center items-center">
         <Image
           className="mr-1"
-          src="/icons/sprint-brown.svg"
-          alt="Sprinting man"
+          src="/icons/article.svg"
+          alt="Page with text"
           width={24}
           height={24}
         />
-        <h1 className="font-bold uppercase text-neutral-800">Sprints</h1>
+        <h1 className="font-bold uppercase text-neutral-800">Requirements</h1>
       </div>
       {user.role === "owner" && (
         <Button
-          text={"Create Sprint"}
+          text={"Create Requirement"}
           handle={() => {
             router.push(
-              `/organizations/${router.query?.organization}/projects/${router.query?.project}/sprints/create`
+              `/organizations/${router.query?.organization}/projects/${router.query?.project}/sprints/${router.query?.sprint}/create-requirement`
             );
           }}
         />
@@ -31,4 +31,4 @@ const SprintListHeader = ({ user }) => {
   );
 };
 
-export default SprintListHeader;
+export default SprintRequirementListHeader;

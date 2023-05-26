@@ -36,7 +36,7 @@ const Organization = () => {
         }
       )
       .then((response) => {
-        console.log("received data", response);
+        console.log("received data", response.data.data);
         setTasksData(response.data.data);
       })
       .catch((error) => {
@@ -54,9 +54,12 @@ const Organization = () => {
   return (
     <OrganizationLayout>
       <div className="flex flex-col justify-center items-center">
-        <div className="w-[80%] bg-secondary-50 rounded-lg mt-10 h-[300px]">
-          <AllProjectsTasksChart data={tasksData} />
-        </div>
+        {tasksData.length > 0 && (
+          <div className="w-[80%] bg-secondary-50 rounded-lg mt-10 h-[300px]">
+            <AllProjectsTasksChart data={tasksData} />
+          </div>
+        )}
+
         <div className="flex justify-center items-center mt-10">
           <p className="text-sm uppercase font-bold text-secondary-900">
             Select a project.

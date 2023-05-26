@@ -234,7 +234,7 @@ const TaskCard = ({
         </div>
       </div>
       {showExtendedTaskView && (
-        <div className="flex flex-col justify-start items-start p-4 rounded-lg my-2">
+        <div className="flex flex-col justify-start items-start p-4 rounded-lg my-2 relative">
           <div className="flex justify-between items-center w-full">
             <div className="flex justify-start">
               <ButtonTertiary
@@ -306,6 +306,18 @@ const TaskCard = ({
               />
             </div>
           </div>
+          <Image
+            onClick={() => {
+              router.push(
+                `/organizations/${router.query?.organization}/projects/${router.query?.project}/tasks/${id}/edit`
+              );
+            }}
+            className="absolute right-2 bottom-2 p-2 bg-secondary-300 rounded-full hover:cursor-pointer hover:bg-secondary-400"
+            src="/icons/edit.svg"
+            width={36}
+            height={36}
+            alt="edit"
+          />
         </div>
       )}
 

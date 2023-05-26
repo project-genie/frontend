@@ -19,12 +19,9 @@ const SprintUpdateForm = () => {
 
   const getSprint = async () => {
     await axios
-      .get(
-        `http://localhost:8080/api/projects/sprint/${router.query?.sprint}`,
-        {
-          withCredentials: true,
-        }
-      )
+      .get(`http://localhost:8080/api/sprints/sprint/${router.query?.sprint}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setSprint(res.data.data);
         setStartDate(new Date(res.data.data.startDate));
@@ -55,7 +52,7 @@ const SprintUpdateForm = () => {
       try {
         setLoading(true);
         await axios.put(
-          `http://localhost:8080/api/projects/sprints/update/${router.query?.sprint}`,
+          `http://localhost:8080/api/sprints/update/${router.query?.sprint}`,
           {
             name: values.name,
             description: values.description,
@@ -94,7 +91,7 @@ const SprintUpdateForm = () => {
     try {
       setLoading(true);
       await axios.delete(
-        `http://localhost:8080/api/projects/sprints/delete/${router.query?.sprint}`,
+        `http://localhost:8080/api/sprints/delete/${router.query?.sprint}`,
         {
           withCredentials: true,
         }

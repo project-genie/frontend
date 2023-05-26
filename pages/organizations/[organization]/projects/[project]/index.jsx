@@ -29,6 +29,7 @@ const Project = () => {
       toast.error(error.response?.data.message);
     }
   };
+  
   const getTasks = async () => {
     try {
       const response = await axios.get(

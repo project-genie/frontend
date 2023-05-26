@@ -12,12 +12,9 @@ const SprintList = ({ user }) => {
   const getSprints = async () => {
     try {
       await axios
-        .get(
-          `http://localhost:8080/api/projects/sprints/${router.query?.project}`,
-          {
-            withCredentials: true,
-          }
-        )
+        .get(`http://localhost:8080/api/sprints/${router.query?.project}`, {
+          withCredentials: true,
+        })
         .then((res) => {
           console.log("sprints: ", res);
           setSprints(res.data.data);
@@ -38,18 +35,49 @@ const SprintList = ({ user }) => {
   return (
     <div>
       <SprintListHeader user={user} />
-      <div className="">
-        {sprints.map((sprint) => (
-          <SprintCard
-            key={sprint.id}
-            id={sprint.id}
-            name={sprint.name}
-            description={sprint.description}
-            phase={sprint.phase}
-            status={sprint.status}
-            
-          />
-        ))}
+
+      <div className="my-4">
+        <div>
+          <h1 className="text-secondary-800 text-sm font-bold">
+            Active Sprints
+          </h1>
+        </div>
+        <div className="">
+          {sprints
+            .filter((sprint) => sprint.status === "active")
+            .map((sprint) => (
+              <SprintCard
+                key={sprint.id}
+                id={sprint.id}
+                name={sprint.name}
+                description={sprint.description}
+                phase={sprint.phase}
+                status={sprint.status}
+              />
+            ))}
+        </div>
+      </div>
+
+      <div className="my-4">
+        <div>
+          <h1 className="text-secondary-800 text-sm font-bold">
+            Inactive Sprints
+          </h1>
+        </div>
+        <div className="">
+          {sprints
+            .filter((sprint) => sprint.status === "inactive")
+            .map((sprint) => (
+              <SprintCard
+                key={sprint.id}
+                id={sprint.id}
+                name={sprint.name}
+                description={sprint.description}
+                phase={sprint.phase}
+                status={sprint.status}
+              />
+            ))}
+        </div>
       </div>
     </div>
   );
