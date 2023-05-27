@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import SprintRequirementListHeader from "./SprintRequirementListHeader";
 import SprintRequirementCard from "./SprintRequirementCard";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
 const SprintRequirementList = ({ user }) => {
@@ -41,7 +40,9 @@ const SprintRequirementList = ({ user }) => {
       <SprintRequirementListHeader user={user} />
       <div className="my-4">
         {sprintRequirements.map((requirement) => {
-          return <SprintRequirementCard requirement={requirement} />;
+          return (
+            <SprintRequirementCard requirement={requirement} user={user} />
+          );
         })}
       </div>
     </div>

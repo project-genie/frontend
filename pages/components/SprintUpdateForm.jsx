@@ -109,14 +109,6 @@ const SprintUpdateForm = () => {
     }
   };
 
-  const phases = [
-    "requirements",
-    "development",
-    "testing",
-    "demo",
-    "retrospective",
-  ];
-
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>

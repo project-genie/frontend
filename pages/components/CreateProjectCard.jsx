@@ -9,7 +9,7 @@ import Image from "next/image";
 
 const CreateProjectCard = () => {
   const [loading, setLoading] = useState(false);
-  const [projectType, setProjectType] = useState("waterfall");
+  const [projectType, setProjectType] = useState("agile");
   const [step, setStep] = useState(1);
   const router = useRouter();
   const formik = useFormik({
@@ -112,29 +112,6 @@ const CreateProjectCard = () => {
               <div
                 className="mx-2 flex flex-col justify-center items-center hover:cursor-pointer hover:-translate-y-2 transform transition-all"
                 onClick={() => {
-                  setProjectType("waterfall");
-                }}
-              >
-                <div
-                  style={
-                    projectType === "waterfall"
-                      ? { backgroundColor: "#D82F54" }
-                      : { backgroundColor: "#CABFB9" }
-                  }
-                  className="p-4 rounded-md"
-                >
-                  <Image
-                    src={"/icons/water.svg"}
-                    width={80}
-                    height={80}
-                    alt="waterfall"
-                  />
-                </div>
-                <p>Waterfall</p>
-              </div>
-              <div
-                className="mx-2 flex flex-col justify-center items-center hover:cursor-pointer hover:-translate-y-2 transform transition-all"
-                onClick={() => {
                   setProjectType("agile");
                 }}
               >
@@ -155,6 +132,29 @@ const CreateProjectCard = () => {
                 </div>
 
                 <p>Agile</p>
+              </div>
+              <div
+                className="mx-2 flex flex-col justify-center items-center hover:cursor-pointer hover:-translate-y-2 transform transition-all"
+                onClick={() => {
+                  // setProjectType("waterfall");
+                }}
+              >
+                <div
+                  style={
+                    projectType === "waterfall"
+                      ? { backgroundColor: "#D82F54" }
+                      : { backgroundColor: "#CABFB9" }
+                  }
+                  className="p-4 rounded-md"
+                >
+                  <Image
+                    src={"/icons/water.svg"}
+                    width={80}
+                    height={80}
+                    alt="waterfall"
+                  />
+                </div>
+                <p>Waterfall</p>
               </div>
             </div>
             <div className="flex justify-between">

@@ -71,11 +71,11 @@ const CreateTaskCard = () => {
             toast.error(err.response?.data.message);
           });
         setLoading(false);
-        //   setTimeout(() => {
-        //     router.push(
-        //       `/organizations/${router.query?.organization}/projects/${router.query?.project}`
-        //     );
-        //   }, 2000);
+        setTimeout(() => {
+          router.push(
+            `/organizations/${router.query?.organization}/projects/${router.query?.project}`
+          );
+        }, 2000);
       } catch (error) {
         setLoading(false);
       }

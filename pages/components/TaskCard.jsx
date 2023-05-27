@@ -54,22 +54,12 @@ const TaskCard = ({
     }
   };
 
-  useEffect(() => {
-    getUser();
-  }, []);
-
   const calculateRemainingHours = () => {
     const diffInMs =
       new Date(predicted_completion_date).getTime() - new Date().getTime();
     const diffInHours = diffInMs / (1000 * 60 * 60);
     setRemainingHours(diffInHours.toFixed(0));
   };
-
-  useEffect(() => {
-    if (startedAt && predicted_completion_date) {
-      calculateRemainingHours();
-    }
-  }, [predicted_completion_date, startedAt]);
 
   const handleExtendedTaskView = () => {
     setShowExtendedTaskView(!showExtendedTaskView);
@@ -97,12 +87,6 @@ const TaskCard = ({
       toast.error(error.response?.data.message);
     }
   };
-
-  useEffect(() => {
-    if (router.isReady) {
-      getPeople();
-    }
-  }, [router.isReady]);
 
   const handleUpdateTask = (status) => async () => {
     try {
@@ -181,6 +165,20 @@ const TaskCard = ({
       toast.error(error.response?.data.message);
     }
   };
+
+  useEffect(() => {
+    if (startedAt && predicted_completion_date) {
+      calculateRemainingHours();
+    }
+  }, [predicted_completion_date, startedAt]);
+
+  useEffect(() => {
+    if (router.isReady) {
+      getPeople();
+      getUser();
+    }
+  }, [router.isReady]);
+
   return (
     <div className="p-4 rounded-md bg-secondary-100 my-2">
       <div className="flex items-center justify-between">
